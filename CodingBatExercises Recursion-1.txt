@@ -1,0 +1,870 @@
+﻿CODING.BAT EXERCISES
+
+Java
+
+Recursion-1
+
+1. factorial 
+
+Given n of 1 or more, return the factorial of n, which is n * (n-1) * (n-2) ... 1. Compute the result recursively (without loops). 
+
+factorial(1) → 1
+factorial(2) → 2
+factorial(3) → 6
+
+public int factorial(int n)
+
+  if (n > 1)
+    return n * factorial(n-1);
+  else
+    return 1;
+
+Expected	Run		
+factorial(1) → 1	1	OK	    
+factorial(2) → 2	2	OK	    
+factorial(3) → 6	6	OK	    
+factorial(4) → 24	24	OK	    
+factorial(5) → 120	120	OK	   
+
+2. bunnyEars
+
+We have a number of bunnies and each bunny has two big floppy ears. We want to compute the total number of ears across all the bunnies recursively (without loops or multiplication). 
+
+bunnyEars(0) → 0
+bunnyEars(1) → 2
+bunnyEars(2) → 4
+
+public int bunnyEars(int bunnies)
+
+  if (bunnies == 0)
+    return 0;
+  else if (bunnies == 1)
+    return 2;
+  else
+    return 2 + bunnyEars(bunnies - 1);
+
+Expected	Run		
+bunnyEars(0) → 0	0	OK	    
+bunnyEars(1) → 2	2	OK	    
+bunnyEars(2) → 4	4	OK	    
+bunnyEars(3) → 6	6	OK	    
+
+3. fibonacci 
+
+The fibonacci sequence is a famous bit of mathematics, and it happens to have a recursive definition. The first two values in the sequence are 0 and 1 (essentially 2 base cases). Each subsequent value is the sum of the previous two values, so the whole sequence is: 0, 1, 1, 2, 3, 5, 8, 13, 21 and so on. Define a recursive fibonacci(n) method that returns the nth fibonacci number, with n=0 representing the start of the sequence. 
+
+fibonacci(0) → 0
+fibonacci(1) → 1
+fibonacci(2) → 1
+
+public int fibonacci(int n) 
+
+  if (n == 0)
+    return 0;
+  if (n == 1)
+    return 1;
+  else
+    return fibonacci(n-1) + fibonacci(n-2);
+
+4. bunnyEars2 
+
+We have bunnies standing in a line, numbered 1, 2, ... The odd bunnies (1, 3, ..) have the normal 2 ears. The even bunnies (2, 4, ..) we'll say have 3 ears, because they each have a raised foot. Recursively return the number of "ears" in the bunny line 1, 2, ... n (without loops or multiplication). 
+
+bunnyEars2(0) → 0
+bunnyEars2(1) → 2
+bunnyEars2(2) → 5
+
+public int bunnyEars2(int bunnies)
+
+  if (bunnies == 0)
+    return 0;
+  else if (bunnies == 1)
+    return 2;
+  else if (bunnies % 2 == 1)
+    return 2 + bunnyEars2(bunnies - 1);
+  else
+    return 3 + bunnyEars2(bunnies - 1);
+
+Expected	Run		
+bunnyEars2(0) → 0	0	OK	    
+bunnyEars2(1) → 2	2	OK	    
+bunnyEars2(2) → 5	5	OK	    
+bunnyEars2(3) → 7	7	OK	    
+bunnyEars2(4) → 10	10	OK	    
+bunnyEars2(5) → 12	12	OK	    
+bunnyEars2(6) → 15	15	OK	    
+bunnyEars2(10) → 25	25	OK	    
+
+5. triangle 
+
+We have triangle made of blocks. The topmost row has 1 block, the next row down has 2 blocks, the next row has 3 blocks, and so on. Compute recursively (no loops or multiplication) the total number of blocks in such a triangle with the given number of rows. 
+
+triangle(0) → 0
+triangle(1) → 1
+triangle(2) → 3
+
+public int triangle(int rows)
+
+  if (rows == 0)
+    return 0;
+  else
+    return rows + triangle(rows - 1);
+
+Expected	Run		
+triangle(0) → 0	0	OK	    
+triangle(1) → 1	1	OK	    
+triangle(2) → 3	3	OK	    
+triangle(3) → 6	6	OK	    
+triangle(4) → 10	10	OK	    
+triangle(5) → 15	15	OK	    
+triangle(6) → 21	21	OK	  
+
+6. sumDigits 
+
+Given a non-negative int n, return the sum of its digits recursively (no loops).
+
+sumDigits(126) → 9
+sumDigits(49) → 13
+sumDigits(12) → 3
+
+public int sumDigits(int n)
+
+  if (n == 0)
+    return 0;
+  else
+    return (n % 10) + sumDigits(n/10);
+
+Expected	Run		
+sumDigits(126) → 9	9	OK	    
+sumDigits(49) → 13	13	OK	    
+sumDigits(12) → 3	3	OK	    
+sumDigits(10) → 1	1	OK	    
+sumDigits(1) → 1	1	OK	    
+sumDigits(0) → 0	0	OK	    
+sumDigits(730) → 10	10	OK	    
+sumDigits(1111) → 4	4	OK	  
+
+7. count7 
+
+Given a non-negative int n, return the count of the occurrences of 7 as a digit, so for example 717 yields 2. (no loops).
+
+count7(717) → 2
+count7(7) → 1
+count7(123) → 0
+
+public int count7(int n)
+
+  if (n == 0)
+    return 0;
+  else if ( n % 10 == 7)
+    return 1 + count7(n/10);
+  else
+    return count7(n/10);
+
+Expected	Run		
+count7(717) → 2	2	OK	    
+count7(7) → 1	1	OK	    
+count7(123) → 0	0	OK	    
+count7(77) → 2	2	OK	    
+count7(7123) → 1	1	OK	    
+count7(771237) → 3	3	OK	    
+count7(771737) → 4	4	OK	    
+count7(47571) → 2	2	OK	 
+
+8. count8 
+
+Given a non-negative int n, compute recursively (no loops) the count of the occurrences of 8 as a digit, except that an 8 with another 8 immediately to its left counts double, so 8818 yields 4. Note that mod (%) by 10 yields the rightmost digit (126 % 10 is 6), while divide (/) by 10 removes the rightmost digit (126 / 10 is 12). 
+
+count8(8) → 1
+count8(818) → 2
+count8(8818) → 4
+
+public int count8(int n) 
+
+  if (n == 0)
+    return 0;
+  else if (n % 10 == 8)
+    if ((n/10)%10 == 8)
+      return 2 + count8(n/10);
+    else
+      return 1 + count8(n/10);
+  else
+    return count8(n/10);
+
+Expected	Run		
+count8(8) → 1	1	OK	    
+count8(818) → 2	2	OK	    
+count8(8818) → 4	4	OK	    
+count8(8088) → 4	4	OK	    
+count8(123) → 0	0	OK	    
+count8(81238) → 2	2	OK	    
+count8(88788) → 6	6	OK	    
+count8(8234) → 1	1	OK	    
+count8(2348) → 1	1	OK	    
+count8(23884) → 3	3	OK	    
+count8(0) → 0	0	OK	    
+count8(1818188) → 5	5	OK	    
+count8(8818181) → 5	5	OK	    
+count8(1080) → 1	1	OK	    
+count8(188) → 3	3	OK	    
+count8(88888) → 9	9	OK	   
+
+9. powerN 
+
+Given base and n that are both 1 or more, compute recursively (no loops) the value of base to the n power, so powerN(3, 2) is 9 (3 squared). 
+
+powerN(3, 1) → 3
+powerN(3, 2) → 9
+powerN(3, 3) → 27
+
+public int powerN(int base, int n)
+
+  if (n == 0)
+    return 0;
+  else if (n == 1)
+    return base;
+  else
+    return base * powerN(base, n-1);
+
+Expected	Run		
+powerN(3, 1) → 3	3	OK	    
+powerN(3, 2) → 9	9	OK	    
+powerN(3, 3) → 27	27	OK	    
+powerN(2, 1) → 2	2	OK	    
+powerN(2, 2) → 4	4	OK	    
+powerN(2, 3) → 8	8	OK	    
+powerN(2, 4) → 16	16	OK	    
+powerN(2, 5) → 32	32	OK	    
+powerN(10, 1) → 10	10	OK	    
+powerN(10, 2) → 100	100	OK	   
+
+10. countX 
+
+Given a string, compute recursively (no loops) the number of lowercase 'x' chars in the string. 
+
+countX("xxhixx") → 4
+countX("xhixhix") → 3
+countX("hi") → 0
+
+public int countX(String str) 
+
+  if (str.length() == 0)
+    return 0;
+  else if (str.charAt(0)=='x')
+    return 1 + countX(str.substring(1));
+  else
+    return countX(str.substring(1));
+
+Expected	Run		
+countX("xxhixx") → 4	4	OK	    
+countX("xhixhix") → 3	3	OK	    
+countX("hi") → 0	0	OK	    
+countX("h") → 0	0	OK	    
+countX("x") → 1	1	OK	    
+countX("") → 0	0	OK	    
+countX("hihi") → 0	0	OK	  
+
+11. countHi 
+
+Given a string, compute recursively (no loops) the number of times lowercase "hi" appears in the string. 
+
+countHi("xxhixx") → 1
+countHi("xhixhix") → 2
+countHi("hi") → 1
+
+public int countHi(String str)
+
+  if (str.length() < 2)
+    return 0;
+  else if (str.substring(0,2).equals("hi"))
+    return 1 + countHi(str.substring(2));
+  else
+    return countHi(str.substring(1));
+
+Expected	Run		
+countHi("xxhixx") → 1	1	OK	    
+countHi("xhixhix") → 2	2	OK	    
+countHi("hi") → 1	1	OK	    
+countHi("hihih") → 2	2	OK	    
+countHi("h") → 0	0	OK	    
+countHi("") → 0	0	OK	    
+countHi("ihihihihih") → 4	4	OK	   
+
+12. changeXY 
+
+Given a string, compute recursively (no loops) a new string where all the lowercase 'x' chars have been changed to 'y' chars. 
+
+changeXY("codex") → "codey"
+changeXY("xxhixx") → "yyhiyy"
+changeXY("xhixhix") → "yhiyhiy"
+
+public String changeXY(String str) 
+
+  if (str.length() == 0)
+    return "";
+  else if (str.charAt(0)=='x')
+    return "y" + changeXY(str.substring(1));
+  else
+    return str.substring(0,1) + changeXY(str.substring(1));
+
+Expected	Run		
+changeXY("codex") → "codey"	"codey"	OK	    
+changeXY("xxhixx") → "yyhiyy"	"yyhiyy"	OK	    
+changeXY("xhixhix") → "yhiyhiy"	"yhiyhiy"	OK	    
+changeXY("hiy") → "hiy"	"hiy"	OK	    
+changeXY("h") → "h"	"h"	OK	    
+changeXY("x") → "y"	"y"	OK	    
+changeXY("") → ""	""	OK	    
+changeXY("xxx") → "yyy"	"yyy"	OK	   
+
+13. changePi 
+
+Given a string, compute recursively (no loops) a new string where all appearances of "pi" have been replaced by "3.14". 
+
+changePi("xpix") → "x3.14x"
+changePi("pipi") → "3.143.14"
+changePi("pip") → "3.14p"
+
+public String changePi(String str)
+
+  if (str.length() < 2)
+    return str;
+  else if (str.substring(0,2).equals("pi"))
+    return "3.14" + changePi(str.substring(2));
+  else
+    return str.substring(0,1) + changePi(str.substring(1));
+
+Expected	Run		
+changePi("xpix") → "x3.14x"	"x3.14x"	OK	    
+changePi("pipi") → "3.143.14"	"3.143.14"	OK	    
+changePi("pip") → "3.14p"	"3.14p"	OK	    
+changePi("pi") → "3.14"	"3.14"	OK	    
+changePi("hip") → "hip"	"hip"	OK	    
+changePi("p") → "p"	"p"	OK	    
+changePi("x") → "x"	"x"	OK	    
+changePi("") → ""	""	OK	    
+changePi("pixx") → "3.14xx"	"3.14xx"	OK	    
+
+14. noX 
+
+Given a string, compute recursively a new string where all the 'x' chars have been removed. 
+
+noX("xaxb") → "ab"
+noX("abc") → "abc"
+noX("xx") → ""
+
+public String noX(String str)
+
+  if (str.length() == 0)
+    return "";
+  else if (str.charAt(0)=='x')
+    return noX(str.substring(1));
+  else
+    return str.substring(0,1) + noX(str.substring(1));
+
+Expected	Run		
+noX("xaxb") → "ab"	"ab"	OK	    
+noX("abc") → "abc"	"abc"	OK	    
+noX("xx") → ""	""	OK	    
+noX("") → ""	""	OK	    
+noX("axxbxx") → "ab"	"ab"	OK	    
+noX("Hellox") → "Hello"	"Hello"	OK	   
+
+15. array6 
+
+Given an array of ints, compute recursively if the array contains a 6. We'll use the convention of considering only the part of the array that begins at the given index. In this way, a recursive call can pass index+1 to move down the array. The initial call will pass in index as 0. 
+
+array6({1, 6, 4}, 0) → true
+array6({1, 4}, 0) → false
+array6({6}, 0) → true
+
+public boolean array6(int[] nums, int index)
+
+  if (index > nums.length-1)
+    return false;
+  else if (nums[index] == 6)
+    return true;
+  else
+    return array6(nums, index+1);
+
+Expected	Run		
+array6({1, 6, 4}, 0) → true	true	OK	    
+array6({1, 4}, 0) → false	false	OK	    
+array6({6}, 0) → true	true	OK	    
+array6({}, 0) → false	false	OK	    
+array6({6, 2, 2}, 0) → true	true	OK	    
+array6({2, 5}, 0) → false	false	OK	    
+array6({1, 9, 4, 6, 6}, 0) → true	true	OK	    
+array6({2, 5, 6}, 0) → true	true	OK	   
+
+16. array11 
+
+Given an array of ints, compute recursively the number of times that the value 11 appears in the array. We'll use the convention of considering only the part of the array that begins at the given index. In this way, a recursive call can pass index+1 to move down the array. The initial call will pass in index as 0. 
+
+array11({1, 2, 11}, 0) → 1
+array11({11, 11}, 0) → 2
+array11({1, 2, 3, 4}, 0) → 0
+
+public int array11(int[] nums, int index) 
+
+  if (index > nums.length-1)
+    return 0;
+  else if (nums[index] == 11)
+    return 1 + array11(nums, index+1);
+  else
+    return array11(nums, index+1);
+
+17. array220 
+
+Given an array of ints, compute recursively if the array contains somewhere a value followed in the array by that value times 10. We'll use the convention of considering only the part of the array that begins at the given index. In this way, a recursive call can pass index+1 to move down the array. The initial call will pass in index as 0. 
+
+array220({1, 2, 20}, 0) → true
+array220({3, 30}, 0) → true
+array220({3}, 0) → false
+
+public boolean array220(int[] nums, int index) 
+
+  if (index >= nums.length-1)
+    return false;
+  else if (nums[index+1] == (10 * nums[index]))
+    return true;
+  else
+    return array220(nums, index+1);
+
+Expected	Run		
+array220({1, 2, 20}, 0) → true	true	OK	    
+array220({3, 30}, 0) → true	true	OK	    
+array220({3}, 0) → false	false	OK	    
+array220({}, 0) → false	false	OK	    
+array220({3, 3, 30, 4}, 0) → true	true	OK	    
+array220({2, 19, 4}, 0) → false	false	OK	    
+array220({20, 2, 21}, 0) → false	false	OK	    
+array220({20, 2, 21, 210}, 0) → true	true	OK	    
+array220({2, 200, 2000}, 0) → true	true	OK	    
+array220({0, 0}, 0) → true	true	OK	    
+array220({1, 2, 3, 4, 5, 6}, 0) → false	false	OK	    
+array220({1, 2, 3, 4, 5, 50, 6}, 0) → true	true	OK	    
+
+18. allStar 
+
+Given a string, compute recursively a new string where all the adjacent chars are now separated by a "*". 
+
+allStar("hello") → "h*e*l*l*o"
+allStar("abc") → "a*b*c"
+allStar("ab") → "a*b"
+
+public String allStar(String str)
+
+  if (str.length() < 2)
+    return str;
+  else
+    return str.substring(0,1) + "*" + allStar(str.substring(1));
+
+Expected	Run		
+allStar("hello") → "h*e*l*l*o"	"h*e*l*l*o"	OK	    
+allStar("abc") → "a*b*c"	"a*b*c"	OK	    
+allStar("ab") → "a*b"	"a*b"	OK	    
+allStar("a") → "a"	"a"	OK	    
+allStar("") → ""	""	OK	    
+allStar("3.14") → "3*.*1*4"	"3*.*1*4"	OK	   
+
+19. pairStar 
+
+Given a string, compute recursively a new string where identical chars that are adjacent in the original string are separated from each other by a "*". 
+
+pairStar("hello") → "hel*lo"
+pairStar("xxyy") → "x*xy*y"
+pairStar("aaaa") → "a*a*a*a"
+
+public String pairStar(String str)
+
+  if (str.length() < 2)
+    return str;
+  else if (str.charAt(0)==str.charAt(1))
+    return str.substring(0,1) + "*" + pairStar(str.substring(1));
+  else
+    return str.substring(0,1) + pairStar(str.substring(1));
+
+Expected	Run		
+pairStar("hello") → "hel*lo"	"hel*lo"	OK	    
+pairStar("xxyy") → "x*xy*y"	"x*xy*y"	OK	    
+pairStar("aaaa") → "a*a*a*a"	"a*a*a*a"	OK	    
+pairStar("aaab") → "a*a*ab"	"a*a*ab"	OK	    
+pairStar("aa") → "a*a"	"a*a"	OK	    
+pairStar("a") → "a"	"a"	OK	    
+pairStar("") → ""	""	OK	    
+pairStar("noadjacent") → "noadjacent"	"noadjacent"	OK	   
+
+20. endX 
+
+Given a string, compute recursively a new string where all the lowercase 'x' chars have been moved to the end of the string. 
+
+endX("xxre") → "rexx"
+endX("xxhixx") → "hixxxx"
+endX("xhixhix") → "hihixxx"
+
+public String endX(String str)
+
+  if (str.length() == 0)
+    return "";
+  else if (str.charAt(0)=='x')
+    return endX(str.substring(1)) + "x";
+  else
+    return str.substring(0,1) + endX(str.substring(1));
+
+Expected	Run		
+endX("xxre") → "rexx"	"rexx"	OK	    
+endX("xxhixx") → "hixxxx"	"hixxxx"	OK	    
+endX("xhixhix") → "hihixxx"	"hihixxx"	OK	    
+endX("hiy") → "hiy"	"hiy"	OK	    
+endX("h") → "h"	"h"	OK	    
+endX("x") → "x"	"x"	OK	    
+endX("xx") → "xx"	"xx"	OK	    
+endX("") → ""	""	OK	    
+endX("bxx") → "bxx"	"bxx"	OK	    
+endX("bxax") → "baxx"	"baxx"	OK	  
+
+21. countPairs
+
+We'll say that a "pair" in a string is two instances of a char separated by a char. So "AxA" the A's make a pair. Pair's can overlap, so "AxAxA" contains 3 pairs -- 2 for A and 1 for x. Recursively compute the number of pairs in the given string. 
+
+countPairs("axa") → 1
+countPairs("axax") → 2
+countPairs("axbx") → 1
+
+public int countPairs(String str)
+
+  if (str.length() < 3)
+    return 0;
+  else if (str.charAt(0)==str.charAt(2))
+    return 1 + countPairs(str.substring(1));
+  else
+    return countPairs(str.substring(1));
+
+Expected	Run		
+countPairs("axa") → 1	1	OK	    
+countPairs("axax") → 2	2	OK	    
+countPairs("axbx") → 1	1	OK	    
+countPairs("hi") → 0	0	OK	    
+countPairs("hihih") → 3	3	OK	    
+countPairs("ihihhh") → 3	3	OK	    
+countPairs("ihjxhh") → 0	0	OK	    
+countPairs("") → 0	0	OK	    
+countPairs("a") → 0	0	OK	  
+
+22. countAbc 
+
+Count recursively the total number of "abc" and "aba" substrings that appear in the given string. 
+
+countAbc("abc") → 1
+countAbc("abcxxabc") → 2
+countAbc("abaxxaba") → 2
+
+public int countAbc(String str)
+
+  if (str.length() < 3)
+    return 0;
+  else if (str.substring(0,3).equals("aba") ||
+           str.substring(0,3).equals("abc"))
+    return 1 + countAbc(str.substring(1));
+  else
+    return countAbc(str.substring(1));
+
+Expected	Run		
+countAbc("abc") → 1	1	OK	    
+countAbc("abcxxabc") → 2	2	OK	    
+countAbc("abaxxaba") → 2	2	OK	    
+countAbc("ababc") → 2	2	OK	    
+countAbc("abxbc") → 0	0	OK	    
+countAbc("aaabc") → 1	1	OK	    
+countAbc("hello") → 0	0	OK	    
+countAbc("") → 0	0	OK	    
+countAbc("ab") → 0	0	OK	    
+countAbc("aba") → 1	1	OK	   
+
+23. count11 
+
+Given a string, compute recursively (no loops) the number of "11" substrings in the string. The "11" substrings should not overlap. 
+
+count11("11abc11") → 2
+count11("abc11x11x11") → 3
+count11("111") → 1
+
+public int count11(String str)
+
+  if (str.length() < 2)
+    return 0;
+  else if (str.substring(0,2).equals("11"))
+    return 1 + count11(str.substring(2));
+  else
+    return count11(str.substring(1));
+
+Expected	Run		
+count11("11abc11") → 2	2	OK	    
+count11("abc11x11x11") → 3	3	OK	    
+count11("111") → 1	1	OK	    
+count11("1111") → 2	2	OK	    
+count11("1") → 0	0	OK	    
+count11("") → 0	0	OK	    
+count11("hi") → 0	0	OK	  
+
+24. stringClean 
+
+Given a string, return recursively a "cleaned" string where adjacent chars that are the same have been reduced to a single char. So "yyzzza" yields "yza". 
+
+stringClean("yyzzza") → "yza"
+stringClean("abbbcdd") → "abcd"
+stringClean("Hello") → "Helo"
+
+public String stringClean(String str) 
+
+  if (str.length() < 2)
+    return str;
+  else if (str.charAt(0) == str.charAt(1))
+    return stringClean(str.substring(1));
+  else
+    return str.substring(0,1) + stringClean(str.substring(1));
+
+xpected	Run		
+stringClean("yyzzza") → "yza"	"yza"	OK	    
+stringClean("abbbcdd") → "abcd"	"abcd"	OK	    
+stringClean("Hello") → "Helo"	"Helo"	OK	    
+stringClean("XXabcYY") → "XabcY"	"XabcY"	OK	    
+stringClean("112ab445") → "12ab45"	"12ab45"	OK	   
+
+25. countHi2 
+
+Given a string, compute recursively the number of times lowercase "hi" appears in the string, however do not count "hi" that have an 'x' immedately before them. 
+
+countHi2("ahixhi") → 1
+countHi2("ahibhi") → 2
+countHi2("xhixhi") → 0
+
+public int countHi2(String str) 
+
+  if (str.length() < 2)
+    return 0;
+  else if (str.substring(0,2).equals("hi"))
+    return 1 + countHi2(str.substring(2));
+  else if (str.length() > 2 && str.substring(0,3).equals("xhi"))
+    return countHi2(str.substring(3));
+  else if (str.length() > 2 && str.substring(1,3).equals("hi"))
+    return 1 + countHi2(str.substring(3));
+  else
+    return countHi2(str.substring(1));
+
+Expected	Run		
+countHi2("ahixhi") → 1	1	OK	    
+countHi2("ahibhi") → 2	2	OK	    
+countHi2("xhixhi") → 0	0	OK	    
+countHi2("hixhi") → 1	1	OK	    
+countHi2("hixhhi") → 2	2	OK	    
+countHi2("hihihi") → 3	3	OK	    
+countHi2("hihihix") → 3	3	OK	    
+countHi2("xhihihix") → 2	2	OK	    
+countHi2("xxhi") → 0	0	OK	    
+countHi2("hixxhi") → 1	1	OK	    
+countHi2("hi") → 1	1	OK	    
+
+26. parenBit 
+
+Given a string that contains a single pair of parenthesis, compute recursively a new string made of only of the parenthesis and their contents, so "xyz(abc)123" yields "(abc)". 
+
+parenBit("xyz(abc)123") → "(abc)"
+parenBit("x(hello)") → "(hello)"
+parenBit("(xy)1") → "(xy)"
+
+public String parenBit(String str)
+
+  if (str.charAt(0)=='(' && str.charAt(str.length()-1)==')')
+    return str;
+
+  else if (str.charAt(0)=='(')
+    return parenBit(str.substring(0, str.length()-1));
+
+  else if (str.charAt(str.length()-1)==')')
+    return parenBit(str.substring(1));
+    
+  else if (str.length() < 2)
+    return "";
+    
+  else
+    return parenBit(str.substring(1, str.length()-1));
+
+Expected	Run		
+parenBit("xyz(abc)123") → "(abc)"	"(abc)"	OK	    
+parenBit("x(hello)") → "(hello)"	"(hello)"	OK	    
+parenBit("(xy)1") → "(xy)"	"(xy)"	OK	    
+parenBit("not really (possible)") → "(possible)"	"(possible)"	OK	    
+parenBit("(abc)") → "(abc)"	"(abc)"	OK	    
+parenBit("(abc)xyz") → "(abc)"	"(abc)"	OK	    
+parenBit("(abc)x") → "(abc)"	"(abc)"	OK	    
+parenBit("(x)") → "(x)"	"(x)"	OK	    
+parenBit("()") → "()"	"()"	OK	    
+parenBit("res (ipsa) loquitor") → "(ipsa)"	"(ipsa)"	OK	    
+parenBit("hello(not really)there") → "(not really)"	"(not really)"	OK	    
+parenBit("ab(ab)ab") → "(ab)"	"(ab)"	OK	  
+
+27. nestParen 
+
+Given a string, return true if it is a nesting of zero or more pairs of parenthesis, like "(())" or "((()))". Suggestion: check the first and last chars, and then recur on what's inside them. 
+
+nestParen("(())") → true
+nestParen("((()))") → true
+nestParen("(((x))") → false
+
+public boolean nestParen(String str)
+
+  if (str.length() == 0)
+    return true;
+
+  if (str.length() == 1)
+    return false;
+
+  else if (str.charAt(0)=='(' && str.charAt(str.length()-1)!= ')')
+    return false;
+
+  else if (str.charAt(0)!='(' && str.charAt(str.length()-1)== ')')
+    return false;
+
+  else if (str.charAt(0)=='(' && str.charAt(str.length()-1)== ')')
+    return nestParen(str.substring(1, str.length()-1));    
+
+  else
+    return false;
+
+Expected	Run		
+nestParen("(())") → true	true	OK	    
+nestParen("((()))") → true	true	OK	    
+nestParen("(((x))") → false	false	OK	    
+nestParen("((())") → false	false	OK	    
+nestParen("((()()") → false	false	OK	    
+nestParen("()") → true	true	OK	    
+nestParen("") → true	true	OK	    
+nestParen("(yy)") → false	false	OK	    
+nestParen("(())") → true	true	OK	    
+nestParen("(((y))") → false	false	OK	    
+nestParen("((y)))") → false	false	OK	    
+nestParen("((()))") → true	true	OK	    
+nestParen("(())))") → false	false	OK	    
+nestParen("((yy())))") → false	false	OK	    
+nestParen("(((())))") → true	true	OK	    
+
+28. strCount 
+
+Given a string and a non-empty substring sub, compute recursively the number of times that sub appears in the string, without the sub strings overlapping. 
+
+strCount("catcowcat", "cat") → 2
+strCount("catcowcat", "cow") → 1
+strCount("catcowcat", "dog") → 0
+
+public int strCount(String str, String sub)
+
+  if (str.length() < sub.length())
+    return 0;
+  else if (str.substring(0, sub.length()).equals(sub))
+    return 1 + strCount(str.substring(sub.length()), sub);
+  else
+    return strCount(str.substring(1), sub);
+
+Expected	Run		
+strCount("catcowcat", "cat") → 2	2	OK	    
+strCount("catcowcat", "cow") → 1	1	OK	    
+strCount("catcowcat", "dog") → 0	0	OK	    
+strCount("cacatcowcat", "cat") → 2	2	OK	    
+strCount("xyx", "x") → 2	2	OK	    
+strCount("iiiijj", "i") → 4	4	OK	    
+strCount("iiiijj", "ii") → 2	2	OK	    
+strCount("iiiijj", "iii") → 1	1	OK	    
+strCount("iiiijj", "j") → 2	2	OK	    
+strCount("iiiijj", "jj") → 1	1	OK	    
+strCount("aaabababab", "ab") → 4	4	OK	    
+strCount("aaabababab", "aa") → 1	1	OK	    
+strCount("aaabababab", "a") → 6	6	OK	    
+strCount("aaabababab", "b") → 4	4	OK	  
+
+29. strCopies 
+
+Given a string and a non-empty substring sub, compute recursively if at least n copies of sub appear in the string somewhere, possibly with overlapping. N will be non-negative. 
+
+strCopies("catcowcat", "cat", 2) → true
+strCopies("catcowcat", "cow", 2) → false
+strCopies("catcowcat", "cow", 1) → true
+
+public boolean strCopies(String str, String sub, int n)
+
+  if (str.length() < sub.length())
+    if (n ==0)
+      return true;
+    else
+      return false;
+  else if (str.substring(0, sub.length()).equals(sub))
+    if (n == 1)
+      return true;
+    else
+      return strCopies(str.substring(1), sub, n-1);
+  else
+    return strCopies(str.substring(1), sub, n);
+
+Expected	Run		
+strCopies("catcowcat", "cat", 2) → true	true	OK	    
+strCopies("catcowcat", "cow", 2) → false	false	OK	    
+strCopies("catcowcat", "cow", 1) → true	true	OK	    
+strCopies("iiijjj", "i", 3) → true	true	OK	    
+strCopies("iiijjj", "i", 4) → false	false	OK	    
+strCopies("iiijjj", "ii", 2) → true	true	OK	    
+strCopies("iiijjj", "ii", 3) → false	false	OK	    
+strCopies("iiijjj", "x", 3) → false	false	OK	    
+strCopies("iiijjj", "x", 0) → true	true	OK	    
+strCopies("iiiiij", "iii", 3) → true	true	OK	    
+strCopies("iiiiij", "iii", 4) → false	false	OK	    
+strCopies("ijiiiiij", "iiii", 2) → true	true	OK	    
+strCopies("ijiiiiij", "iiii", 3) → false	false	OK	    
+strCopies("dogcatdogcat", "dog", 2) → true	true	OK	   
+
+30. strDist
+
+Given a string and a non-empty substring sub, compute recursively the largest substring which starts and ends with sub and return its length. 
+
+strDist("catcowcat", "cat") → 9
+strDist("catcowcat", "cow") → 3
+strDist("cccatcowcatxx", "cat") → 9
+
+public int strDist(String str, String sub)
+
+  if (str.length() < sub.length() || (str.length()==sub.length() &&
+                                      !str.equals(sub)))
+    return 0;
+    
+  else if (str.equals(sub))
+    return sub.length();
+    
+  else if (str.substring(0, sub.length()).equals(sub) &&
+           str.substring(str.length()-sub.length()).equals(sub))
+           return str.length();
+           
+  else if (str.substring(0, sub.length()).equals(sub))
+           return strDist(str.substring(0, str.length()-1), sub);
+           
+  else if (str.substring(str.length()-sub.length()).equals(sub))
+           return strDist(str.substring(1), sub);
+           
+  else
+    return strDist(str.substring(1, str.length()-1), sub);
+
+Expected	Run		
+strDist("catcowcat", "cat") → 9	9	OK	    
+strDist("catcowcat", "cow") → 3	3	OK	    
+strDist("cccatcowcatxx", "cat") → 9	9	OK	    
+strDist("abccatcowcatcatxyz", "cat") → 12	12	OK	    
+strDist("xyx", "x") → 3	3	OK	    
+strDist("xyx", "y") → 1	1	OK	    
+strDist("xyx", "z") → 0	0	OK	    
+strDist("z", "z") → 1	1	OK	    
+strDist("x", "z") → 0	0	OK	    
+strDist("", "z") → 0	0	OK	    
+strDist("hiHellohihihi", "hi") → 13	13	OK	    
+strDist("hiHellohihihi", "hih") → 5	5	OK	    
+strDist("hiHellohihihi", "o") → 1	1	OK	    
+strDist("hiHellohihihi", "ll") → 2	2	OK	    
+

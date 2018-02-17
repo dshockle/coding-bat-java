@@ -1,0 +1,632 @@
+﻿CODING.BAT EXERCISES
+
+Java
+
+String-2
+
+1. doubleChar 
+
+Given a string, return a string where for every char in the original, there are two chars. 
+
+doubleChar("The") → "TThhee"
+doubleChar("AAbb") → "AAAAbbbb"
+doubleChar("Hi-There") → "HHii--TThheerree"
+
+public String doubleChar(String str)
+
+  StringBuilder sb = new StringBuilder();
+
+  for(int i = 0; i < str.length(); i++){
+    sb.append(str.charAt(i)); 
+    sb.append(str.charAt(i));
+  }
+  
+  return sb.toString();
+
+Expected	Run		
+doubleChar("The") → "TThhee"	"TThhee"	OK	    
+doubleChar("AAbb") → "AAAAbbbb"	"AAAAbbbb"	OK	    
+doubleChar("Hi-There") → "HHii--TThheerree"	"HHii--TThheerree"	OK	    
+doubleChar("Word!") → "WWoorrdd!!"	"WWoorrdd!!"	OK	    
+doubleChar("!!") → "!!!!"	"!!!!"	OK	    
+doubleChar("") → ""	""	OK	   
+
+2. countHi 
+
+Return the number of times that the string "hi" appears anywhere in the given string. 
+
+countHi("abc hi ho") → 1
+countHi("ABChi hi") → 2
+countHi("hihi") → 2
+
+public int countHi(String str) 
+
+  String noHi = str.replace("hi", "");
+  return (str.length() - noHi.length()) / "hi".length();
+
+Expected	Run		
+countHi("abc hi ho") → 1	1	OK	    
+countHi("ABChi hi") → 2	2	OK	    
+countHi("hihi") → 2	2	OK	    
+countHi("hiHIhi") → 2	2	OK	    
+countHi("") → 0	0	OK	    
+countHi("h") → 0	0	OK	    
+countHi("hi") → 1	1	OK	    
+countHi("Hi is no HI on ahI") → 0	0	OK	    
+countHi("hiho not HOHIhi") → 2	2	OK	   
+
+3. catDog 
+
+Return true if the string "cat" and "dog" appear the same number of times in the given string. 
+
+catDog("catdog") → true
+catDog("catcat") → false
+catDog("1cat1cadodog") → true
+
+public boolean catDog(String str)
+
+  return str.replace("cat","").length() == str.replace("dog","").length();
+
+Expected	Run		
+catDog("catdog") → true	true	OK	    
+catDog("catcat") → false	false	OK	    
+catDog("1cat1cadodog") → true	true	OK	    
+catDog("catxxdogxxxdog") → false	false	OK	    
+catDog("catxdogxdogxcat") → true	true	OK	    
+catDog("catxdogxdogxca") → false	false	OK	    
+catDog("dogdogcat") → false	false	OK	    
+catDog("dogogcat") → true	true	OK	    
+catDog("dog") → false	false	OK	    
+catDog("cat") → false	false	OK	    
+catDog("ca") → true	true	OK	    
+catDog("c") → true	true	OK	    
+catDog("") → true	true	OK	    
+
+4. countCode 
+
+Return the number of times that the string "code" appears anywhere in the given string, except we'll accept any letter for the 'd', so "cope" and "cooe" count. 
+
+countCode("aaacodebbb") → 1
+countCode("codexxcode") → 2
+countCode("cozexxcope") → 2
+
+public int countCode(String str)
+
+  int count = 0;
+  
+  for(int i = 3; i < str.length(); i++)
+    if (str.charAt(i)=='e' && str.charAt(i-2)=='o' && str.charAt(i-3)=='c')
+      count++;
+  
+  return count;
+
+Expected	Run		
+countCode("aaacodebbb") → 1	1	OK	    
+countCode("codexxcode") → 2	2	OK	    
+countCode("cozexxcope") → 2	2	OK	    
+countCode("cozfxxcope") → 1	1	OK	    
+countCode("xxcozeyycop") → 1	1	OK	    
+countCode("cozcop") → 0	0	OK	    
+countCode("abcxyz") → 0	0	OK	    
+countCode("code") → 1	1	OK	    
+countCode("ode") → 0	0	OK	    
+countCode("c") → 0	0	OK	    
+countCode("") → 0	0	OK	  
+
+5. endOther
+
+Given two strings, return true if either of the strings appears at the very end of the other string, ignoring upper/lower case differences (in other words, the computation should not be "case sensitive"). 
+
+endOther("Hiabc", "abc") → true
+endOther("AbC", "HiaBc") → true
+endOther("abc", "abXabc") → true
+
+public boolean endOther(String a, String b)
+
+  String alow = a.toLowerCase();
+  String blow = b.toLowerCase();
+  int alen = a.length();
+  int blen = b.length();
+  
+  if (alen <= blen)
+    return alow.equals(blow.substring(blen - alen));
+  else
+    return blow.equals(alow.substring(alen - blen));  
+
+Expected	Run		
+endOther("Hiabc", "abc") → true	true	OK	    
+endOther("AbC", "HiaBc") → true	true	OK	    
+endOther("abc", "abXabc") → true	true	OK	    
+endOther("Hiabc", "abcd") → false	false	OK	    
+endOther("Hiabc", "bc") → true	true	OK	    
+endOther("Hiabcx", "bc") → false	false	OK	    
+endOther("abc", "abc") → true	true	OK	    
+endOther("xyz", "12xyz") → true	true	OK	    
+endOther("yz", "12xz") → false	false	OK	    
+endOther("Z", "12xz") → true	true	OK	    
+endOther("12", "12") → true	true	OK	    
+endOther("abcXYZ", "abcDEF") → false	false	OK	    
+endOther("ab", "ab12") → false	false	OK	    
+endOther("ab", "12ab") → true	true	OK	    
+
+6. xyzThere 
+
+Return true if the given string contains an appearance of "xyz" where the xyz is not directly preceeded by a period (.). So "xxyz" counts but "x.xyz" does not. 
+
+xyzThere("abcxyz") → true
+xyzThere("abc.xyz") → false
+xyzThere("xyz.abc") → true
+
+public boolean xyzThere(String str)
+
+  int lenstr = str.length();
+  int lenxyz = str.replace("xyz", "").length();
+  int lendot = str.replace(".xyz", "").length();
+  int countxyz = (lenstr - lenxyz) / 3;
+  int countdot = (lenstr - lendot) / 4;
+  return countxyz > countdot;
+
+Expected	Run		
+xyzThere("abcxyz") → true	true	OK	    
+xyzThere("abc.xyz") → false	false	OK	    
+xyzThere("xyz.abc") → true	true	OK	    
+xyzThere("abcxy") → false	false	OK	    
+xyzThere("xyz") → true	true	OK	    
+xyzThere("xy") → false	false	OK	    
+xyzThere("x") → false	false	OK	    
+xyzThere("") → false	false	OK	    
+xyzThere("abc.xyzxyz") → true	true	OK	   
+
+7. bobThere
+
+Return true if the given string contains a "bob" string, but where the middle 'o' char can be any char. 
+
+bobThere("abcbob") → true
+bobThere("b9b") → true
+bobThere("bac") → false
+
+public boolean bobThere(String str)
+
+  for(int i = 2; i < str.length(); i++){
+    if (str.charAt(i)=='b' && str.charAt(i-2)=='b')
+      return true;
+  }
+  return false;
+
+Expected	Run		
+bobThere("abcbob") → true	true	OK	    
+bobThere("b9b") → true	true	OK	    
+bobThere("bac") → false	false	OK	    
+bobThere("bbb") → true	true	OK	    
+bobThere("abcdefb") → false	false	OK	    
+bobThere("b12") → false	false	OK	    
+bobThere("b1b") → true	true	OK	    
+bobThere("b12b1b") → true	true	OK	    
+bobThere("bbc") → false	false	OK	    
+bobThere("bbb") → true	true	OK	    
+bobThere("bb") → false	false	OK	    
+bobThere("b") → false	false	OK	    
+
+8. xyBalance 
+
+  for(int i = str.length() - 1; i >= 0; i--)
+    if (str.charAt(i)=='x')
+      return false;
+    else if (str.charAt(i)=='y')
+      return true;
+      
+  return true;
+
+Expected	Run		
+xyBalance("aaxbby") → true	true	OK	    
+xyBalance("aaxbb") → false	false	OK	    
+xyBalance("yaaxbb") → false	false	OK	    
+xyBalance("yaaxbby") → true	true	OK	    
+xyBalance("xaxxbby") → true	true	OK	    
+xyBalance("xaxxbbyx") → false	false	OK	    
+xyBalance("xxbxy") → true	true	OK	    
+xyBalance("xxbx") → false	false	OK	    
+xyBalance("bbb") → true	true	OK	    
+xyBalance("bxbb") → false	false	OK	    
+xyBalance("bxyb") → true	true	OK	    
+xyBalance("xy") → true	true	OK	    
+xyBalance("y") → true	true	OK	    
+xyBalance("x") → false	false	OK	    
+xyBalance("") → true	true	OK	    
+
+9. mixString 
+
+Given two strings, A and B, create a bigger string made of the first char of A, the first char of B, the second char of A, the second char of B, and so on. Any leftover chars go at the end of the result. 
+
+mixString("abc", "xyz") → "axbycz"
+mixString("Hi", "There") → "HTihere"
+mixString("xxxx", "There") → "xTxhxexre"
+
+public String mixString(String a, String b)
+
+  StringBuilder sb = new StringBuilder();
+  int lena = a.length();
+  int lenb = b.length();
+  
+  for(int i = 0; i < Math.min(lena, lenb); i++){
+    sb.append(a.charAt(i));
+    sb.append(b.charAt(i));
+  }
+  
+  if (lena > lenb)
+    sb.append(a.substring(lenb));
+  else if (lenb > lena)
+    sb.append(b.substring(lena));
+    
+  return sb.toString();
+}
+
+Expected	Run		
+mixString("abc", "xyz") → "axbycz"	"axbycz"	OK	    
+mixString("Hi", "There") → "HTihere"	"HTihere"	OK	    
+mixString("xxxx", "There") → "xTxhxexre"	"xTxhxexre"	OK	    
+mixString("xxx", "X") → "xXxx"	"xXxx"	OK	    
+mixString("2/", "27 around") → "22/7 around"	"22/7 around"	OK	    
+mixString("", "Hello") → "Hello"	"Hello"	OK	    
+mixString("Abc", "") → "Abc"	"Abc"	OK	    
+mixString("", "") → ""	""	OK	    
+mixString("a", "b") → "ab"	"ab"	OK	    
+mixString("ax", "b") → "abx"	"abx"	OK	    
+mixString("a", "bx") → "abx"	"abx"	OK	   
+
+10. repeatEnd
+
+Given a string and an int N, return a string made of N repetitions of the last N characters of the string. You may assume that N is between 0 and the length of the string, inclusive. 
+
+repeatEnd("Hello", 3) → "llollollo"
+repeatEnd("Hello", 2) → "lolo"
+repeatEnd("Hello", 1) → "o"
+
+public String repeatEnd(String str, int n)
+
+  StringBuilder sb = new StringBuilder();
+  
+  for(int i = 0; i < n; i++)
+    sb.append(str.substring(str.length()-n));
+    
+  return sb.toString();
+}
+
+Expected	Run		
+repeatEnd("Hello", 3) → "llollollo"	"llollollo"	OK	    
+repeatEnd("Hello", 2) → "lolo"	"lolo"	OK	    
+repeatEnd("Hello", 1) → "o"	"o"	OK	    
+repeatEnd("Hello", 0) → ""	""	OK	    
+repeatEnd("abc", 3) → "abcabcabc"	"abcabcabc"	OK	    
+repeatEnd("1234", 2) → "3434"	"3434"	OK	    
+repeatEnd("1234", 3) → "234234234"	"234234234"	OK	    
+repeatEnd("", 0) → ""	""	OK	   
+
+11. repeatFront
+
+Given a string and an int n, return a string made of the first n characters of the string, followed by the first n-1 characters of the string, and so on. You may assume that n is between 0 and the length of the string, inclusive (i.e. n >= 0 and n <= str.length()). 
+
+repeatFront("Chocolate", 4) → "ChocChoChC"
+repeatFront("Chocolate", 3) → "ChoChC"
+repeatFront("Ice Cream", 2) → "IcI"
+
+public String repeatFront(String str, int n)
+
+  StringBuilder sb = new StringBuilder();
+
+  for(int i = n; i > 0; i--)
+    sb.append(str.substring(0,i));
+
+  return sb.toString();
+}
+
+Expected	Run		
+repeatFront("Chocolate", 4) → "ChocChoChC"	"ChocChoChC"	OK	    
+repeatFront("Chocolate", 3) → "ChoChC"	"ChoChC"	OK	    
+repeatFront("Ice Cream", 2) → "IcI"	"IcI"	OK	    
+repeatFront("Ice Cream", 1) → "I"	"I"	OK	    
+repeatFront("Ice Cream", 0) → ""	""	OK	    
+repeatFront("xyz", 3) → "xyzxyx"	"xyzxyx"	OK	    
+repeatFront("", 0) → ""	""	OK	    
+repeatFront("Java", 4) → "JavaJavJaJ"	"JavaJavJaJ"	OK	    
+repeatFront("Java", 1) → "J"	"J"	OK	    
+
+12. repeatSeparator
+
+Given two strings, word and a separator, return a big string made of count occurences of the word, separated by the separator string. 
+
+repeatSeparator("Word", "X", 3) → "WordXWordXWord"
+repeatSeparator("This", "And", 2) → "ThisAndThis"
+repeatSeparator("This", "And", 1) → "This"
+
+public String repeatSeparator(String word, String sep, int count) 
+
+  StringBuilder sb = new StringBuilder();
+  
+  for(int i = 0; i < count; i++){
+    if (i > 0)
+      sb.append(sep);
+    sb.append(word);
+  }
+  
+  return sb.toString();
+}
+
+Expected	Run		
+repeatSeparator("Word", "X", 3) → "WordXWordXWord"	"WordXWordXWord"	OK	    
+repeatSeparator("This", "And", 2) → "ThisAndThis"	"ThisAndThis"	OK	    
+repeatSeparator("This", "And", 1) → "This"	"This"	OK	    
+repeatSeparator("Hi", "-n-", 2) → "Hi-n-Hi"	"Hi-n-Hi"	OK	    
+repeatSeparator("AAA", "", 1) → "AAA"	"AAA"	OK	    
+repeatSeparator("AAA", "", 0) → ""	""	OK	   
+
+13. prefixAgain
+
+Given a string, consider the prefix string made of the first N chars of the string. Does that prefix string appear somewhere else in the string? Assume that the string is not empty and that N is in the range 1..str.length(). 
+
+prefixAgain("abXYabc", 1) → true
+prefixAgain("abXYabc", 2) → true
+prefixAgain("abXYabc", 3) → false
+
+public boolean prefixAgain(String str, int n) 
+
+  return str.substring(n).indexOf(str.substring(0,n)) != -1;
+
+xpected	Run		
+prefixAgain("abXYabc", 1) → true	true	OK	    
+prefixAgain("abXYabc", 2) → true	true	OK	    
+prefixAgain("abXYabc", 3) → false	false	OK	   
+prefixAgain("a", 1) → false	false	OK	    
+prefixAgain("aa", 1) → true	true	OK	    
+prefixAgain("ab", 1) → false	false	OK	   
+
+14. xyzMiddle 
+
+Given a string, does "xyz" appear in the middle of the string? To define middle, we'll say that the number of chars to the left and right of the "xyz" must differ by at most one. This problem is harder than it looks. 
+
+xyzMiddle("AAxyzBB") → true
+xyzMiddle("AxyzBB") → true
+xyzMiddle("AxyzBBB") → false
+
+public boolean xyzMiddle(String str)
+
+  if (str.length() < 3)
+    return false;
+    
+  int mid = str.length()/2;
+
+  // if length odd xyz must start at mid-1
+  if (str.substring(mid-1, mid+2).equals("xyz"))
+    return true;
+
+  // if length even xyz must start at mid-2 or mid-1
+  if (str.length() % 2 == 0)
+    if (str.substring(mid-2, mid+1).equals("xyz"))
+      return true;
+  
+  return false;  
+
+Expected	Run		
+xyzMiddle("AAxyzBB") → true	true	OK	    
+xyzMiddle("AxyzBB") → true	true	OK	    
+xyzMiddle("AxyzBBB") → false	false	OK	    
+xyzMiddle("AxyzBBBB") → false	false	OK	    
+xyzMiddle("AAAxyzB") → false	false	OK	    
+xyzMiddle("AAAxyzBB") → true	true	OK	    
+xyzMiddle("AAAAxyzBB") → false	false	OK	    
+xyzMiddle("AAAAAxyzBBB") → false	false	OK	    
+xyzMiddle("1x345xyz12x4") → true	true	OK	    
+xyzMiddle("xyzAxyzBBB") → true	true	OK	    
+xyzMiddle("xyzAxyzBxyz") → true	true	OK	    
+xyzMiddle("xyzxyzAxyzBxyzxyz") → true	true	OK	    
+xyzMiddle("xyzxyzxyzBxyzxyz") → true	true	OK	    
+xyzMiddle("xyzxyzAxyzxyzxyz") → true	true	OK	    
+xyzMiddle("xyzxyzAxyzxyzxy") → false	false	OK	    
+xyzMiddle("AxyzxyzBB") → false	false	OK	    
+xyzMiddle("") → false	false	OK	    
+xyzMiddle("x") → false	false	OK	    
+xyzMiddle("xy") → false	false	OK	    
+xyzMiddle("xyz") → true	true	OK	    
+xyzMiddle("xyzz") → true	true	OK	   
+
+15. getSandwich 
+
+A sandwich is two pieces of bread with something in between. Return the string that is between the first and last appearance of "bread" in the given string, or return the empty string "" if there are not two pieces of bread. 
+
+getSandwich("breadjambread") → "jam"
+getSandwich("xxbreadjambreadyy") → "jam"
+getSandwich("xxbreadyy") → ""
+
+public String getSandwich(String str)
+
+  int first = str.indexOf("bread");
+  int last = str.lastIndexOf("bread");
+  
+  if (first == last)
+    return "";
+  else
+    return str.substring(first+5, last);
+
+Expected	Run		
+getSandwich("breadjambread") → "jam"	"jam"	OK	    
+getSandwich("xxbreadjambreadyy") → "jam"	"jam"	OK	    
+getSandwich("xxbreadyy") → ""	""	OK	    
+getSandwich("xxbreadbreadjambreadyy") → "breadjam"	"breadjam"	OK	    
+getSandwich("breadAbread") → "A"	"A"	OK	    
+getSandwich("breadbread") → ""	""	OK	    
+getSandwich("abcbreaz") → ""	""	OK	    
+getSandwich("xyz") → ""	""	OK	    
+getSandwich("") → ""	""	OK	    
+getSandwich("breadbreaxbread") → "breax"	"breax"	OK	    
+getSandwich("breaxbreadybread") → "y"	"y"	OK	    
+getSandwich("breadbreadbreadbread") → "breadbread"	"breadbread"	OK	   
+
+16. sameStarChar 
+
+Returns true if for every '*' (star) in the string, if there are chars both immediately before and after the star, they are the same. 
+
+sameStarChar("xy*yzz") → true
+sameStarChar("xy*zzz") → false
+sameStarChar("*xa*az") → true
+
+public boolean sameStarChar(String str)
+
+  for(int i = 1; i < str.length()-1; i++)
+    if (str.charAt(i)=='*')
+      if (str.charAt(i-1) != str.charAt(i+1))
+        return false;
+          
+  return true;
+
+Expected	Run		
+sameStarChar("xy*yzz") → true	true	OK	    
+sameStarChar("xy*zzz") → false	false	OK	    
+sameStarChar("*xa*az") → true	true	OK	    
+sameStarChar("*xa*bz") → false	false	OK	    
+sameStarChar("*xa*a*") → true	true	OK	    
+sameStarChar("") → true	true	OK	    
+sameStarChar("*xa*a*a") → true	true	OK	    
+sameStarChar("*xa*a*b") → false	false	OK	    
+sameStarChar("*12*2*2") → true	true	OK	    
+sameStarChar("12*2*3*") → false	false	OK	    
+sameStarChar("abcDEF") → true	true	OK	    
+sameStarChar("*") → true	true	OK	    
+sameStarChar("**") → true	true	OK	   
+
+17. zipZap 
+
+Look for patterns like "zip" and "zap" in the string -- length-3, starting with 'z' and ending with 'p'. Return a string where for all such words, the middle letter is gone, so "zipXzap" yields "zpXzp". 
+
+zipZap("zipXzap") → "zpXzp"
+zipZap("zopzop") → "zpzp"
+zipZap("zzzopzop") → "zzzpzp"
+
+  return str.replaceAll("z.p", "zp");
+
+Expected	Run		
+zipZap("zipXzap") → "zpXzp"	"zpXzp"	OK	    
+zipZap("zopzop") → "zpzp"	"zpzp"	OK	    
+zipZap("zzzopzop") → "zzzpzp"	"zzzpzp"	OK	    
+zipZap("zibzap") → "zibzp"	"zibzp"	OK	    
+zipZap("zip") → "zp"	"zp"	OK	    
+zipZap("zi") → "zi"	"zi"	OK	    
+zipZap("z") → "z"	"z"	OK	    
+zipZap("") → ""	""	OK	    
+zipZap("zzp") → "zp"	"zp"	OK	    
+zipZap("abcppp") → "abcppp"	"abcppp"	OK	   
+
+18. starOut
+
+Return a version of the given string, where for every star (*) in the string the star and the chars immediately to its left and right are gone. So "ab*cd" yields "ad" and "ab**cd" also yields "ad". 
+
+starOut("ab*cd") → "ad"
+starOut("ab**cd") → "ad"
+starOut("sm*eilly") → "silly"
+
+public String starOut(String str)
+
+  StringBuilder sb = new StringBuilder();
+  
+  for(int i = 0; i < str.length(); i++)
+    if (str.charAt(i)!='*')
+      if (i==0 || str.charAt(i-1)!='*')
+        if (i==str.length()-1 || str.charAt(i+1)!='*')      
+          sb.append(str.charAt(i));
+          
+  return sb.toString();
+
+Expected	Run		
+starOut("ab*cd") → "ad"	"ad"	OK	    
+starOut("ab**cd") → "ad"	"ad"	OK	    
+starOut("sm*eilly") → "silly"	"silly"	OK	    
+starOut("sm*eil*ly") → "siy"	"siy"	OK	    
+starOut("sm**eil*ly") → "siy"	"siy"	OK	    
+starOut("sm***eil*ly") → "siy"	"siy"	OK	    
+starOut("stringy*") → "string"	"string"	OK	    
+starOut("*stringy") → "tringy"	"tringy"	OK	    
+starOut("*str*in*gy") → "ty"	"ty"	OK	    
+starOut("abc") → "abc"	"abc"	OK	    
+starOut("a*bc") → "c"	"c"	OK	    
+starOut("ab") → "ab"	"ab"	OK	    
+starOut("a*b") → ""	""	OK	    
+starOut("a") → "a"	"a"	OK	    
+starOut("a*") → ""	""	OK	    
+starOut("*a") → ""	""	OK	    
+starOut("*") → ""	""	OK	    
+starOut("") → ""	""	OK	    
+
+19. plusOut
+
+Given a string and a non-empty word string, return a version of the original String where all chars have been replaced by pluses ("+"), except for appearances of the word string which are preserved unchanged. 
+
+plusOut("12xy34", "xy") → "++xy++"
+plusOut("12xy34", "1") → "1+++++"
+plusOut("12xy34xyabcxy", "xy") → "++xy++xy+++xy"
+
+public String plusOut(String str, String word)
+
+  StringBuilder sb = new StringBuilder();
+  int pos = str.indexOf(word);
+  int start = 0;
+  
+  while (pos != -1){
+    for(int i = start; i < pos; i++)
+      sb.insert(i, '+');
+    sb.append(word);
+    start = pos + word.length();
+    pos = str.indexOf(word, pos + word.length());
+  }
+
+  if (start < str.length())
+    for(int i = start; i < str.length(); i++)
+      sb.append('+');
+
+  return sb.toString();
+
+Expected	Run		
+plusOut("12xy34", "xy") → "++xy++"	"++xy++"	OK	    
+plusOut("12xy34", "1") → "1+++++"	"1+++++"	OK	    
+plusOut("12xy34xyabcxy", "xy") → "++xy++xy+++xy"	"++xy++xy+++xy"	OK	    
+plusOut("abXYabcXYZ", "ab") → "ab++ab++++"	"ab++ab++++"	OK	    
+plusOut("abXYabcXYZ", "abc") → "++++abc+++"	"++++abc+++"	OK	    
+plusOut("abXYabcXYZ", "XY") → "++XY+++XY+"	"++XY+++XY+"	OK	    
+plusOut("abXYxyzXYZ", "XYZ") → "+++++++XYZ"	"+++++++XYZ"	OK	    
+plusOut("--++ab", "++") → "++++++"	"++++++"	OK	    
+plusOut("aaxxxxbb", "xx") → "++xxxx++"	"++xxxx++"	OK	    
+plusOut("123123", "3") → "++3++3"	"++3++3"	OK	    
+
+20. wordEnds 
+
+Given a string and a non-empty word string, return a string made of each char just before and just after every appearance of the word in the string. Ignore cases where there is no char before or after the word, and a char may be included twice if it is between two words. 
+
+wordEnds("abcXY123XYijk", "XY") → "c13i"
+wordEnds("XY123XY", "XY") → "13"
+wordEnds("XY1XY", "XY") → "11"
+
+  StringBuilder sb = new StringBuilder();
+  int pos = str.indexOf(word);
+  
+  while (pos != -1){
+    if (pos > 0)
+      sb.append(str.charAt(pos-1));
+    if (pos < str.length() - word.length())
+      sb.append(str.charAt(pos+word.length()));
+    pos = str.indexOf(word, pos+1);
+  }
+  
+  return sb.toString();
+
+Expected	Run		
+wordEnds("abcXY123XYijk", "XY") → "c13i"	"c13i"	OK	    
+wordEnds("XY123XY", "XY") → "13"	"13"	OK	    
+wordEnds("XY1XY", "XY") → "11"	"11"	OK	    
+wordEnds("XYXY", "XY") → "XY"	"XY"	OK	    
+wordEnds("XY", "XY") → ""	""	OK	    
+wordEnds("Hi", "XY") → ""	""	OK	    
+wordEnds("", "XY") → ""	""	OK	    
+wordEnds("abc1xyz1i1j", "1") → "cxziij"	"cxziij"	OK	    
+wordEnds("abc1xyz1", "1") → "cxz"	"cxz"	OK	    
+wordEnds("abc1xyz11", "1") → "cxz11"	"cxz11"	OK	    
+wordEnds("abc1xyz1abc", "abc") → "11"	"11"	OK	   
+
+21. 

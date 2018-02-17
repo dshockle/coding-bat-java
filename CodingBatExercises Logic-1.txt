@@ -1,0 +1,774 @@
+﻿CODING.BAT EXERCISES
+
+Java
+
+Logic-1
+
+1. cigarParty 
+
+When squirrels get together for a party, they like to have cigars. A squirrel party is successful when the number of cigars is between 40 and 60, inclusive. Unless it is the weekend, in which case there is no upper bound on the number of cigars. Return true if the party with the given values is successful, or false otherwise. 
+
+cigarParty(30, false) → false
+cigarParty(50, false) → true
+cigarParty(70, true) → true
+
+public boolean cigarParty(int cigars, boolean isWeekend) 
+
+  return cigars >= 40 && (isWeekend || cigars <= 60);
+
+cigarParty(30, false) → false	false	OK	    
+cigarParty(50, false) → true	true	OK	    
+cigarParty(70, true) → true	true	OK	    
+cigarParty(30, true) → false	false	OK	    
+cigarParty(50, true) → true	true	OK	    
+cigarParty(60, false) → true	true	OK	    
+cigarParty(61, false) → false	false	OK	   
+
+2. dateFashion 
+
+You and your date are trying to get a table at a restaurant. The parameter "you" is the stylishness of your clothes, in the range 0..10, and "date" is the stylishness of your date's clothes. The result getting the table is encoded as an int value with 0=no, 1=maybe, 2=yes. If either of you is very stylish, 8 or more, then the result is 2 (yes). With the exception that if either of you has style of 2 or less, then the result is 0 (no). Otherwise the result is 1 (maybe). 
+
+dateFashion(5, 10) → 2
+dateFashion(5, 2) → 0
+dateFashion(5, 5) → 1
+
+public int dateFashion(int you, int date)
+
+  if (you <= 2 || date <= 2)
+    return 0;
+  else if (you >= 8 || date >= 8)
+    return 2;
+  else
+    return 1;
+
+Expected	Run		
+dateFashion(5, 10) → 2	2	OK	    
+dateFashion(5, 2) → 0	0	OK	    
+dateFashion(5, 5) → 1	1	OK	    
+dateFashion(3, 3) → 1	1	OK	    
+dateFashion(10, 2) → 0	0	OK	    
+dateFashion(2, 9) → 0	0	OK	    
+dateFashion(9, 9) → 2	2	OK	  
+
+3. squirrelPlay 
+
+The squirrels in Palo Alto spend most of the day playing. In particular, they play if the temperature is between 60 and 90 (inclusive). Unless it is summer, then the upper limit is 100 instead of 90. Given an int temperature and a boolean isSummer, return true if the squirrels play and false otherwise. 
+
+squirrelPlay(70, false) → true
+squirrelPlay(95, false) → false
+squirrelPlay(95, true) → true
+
+public boolean squirrelPlay(int temp, boolean isSummer)
+
+  int min = 60;
+  int max = isSummer ? 100 : 90;
+  return temp >= min && temp <= max;
+
+Expected	Run		
+squirrelPlay(70, false) → true	true	OK	    
+squirrelPlay(95, false) → false	false	OK	    
+squirrelPlay(95, true) → true	true	OK	    
+squirrelPlay(90, false) → true	true	OK	    
+squirrelPlay(90, true) → true	true	OK	    
+squirrelPlay(50, false) → false	false	OK	    
+squirrelPlay(50, true) → false	false	OK	    
+squirrelPlay(100, false) → false	false	OK	    
+squirrelPlay(100, true) → true	true	OK	    
+squirrelPlay(105, true) → false	false	OK	   
+
+4. caughtSpeeding 
+
+You are driving a little too fast, and a police officer stops you. Write code to compute the result, encoded as an int value: 0=no ticket, 1=small ticket, 2=big ticket. If speed is 60 or less, the result is 0. If speed is between 61 and 80 inclusive, the result is 1. If speed is 81 or more, the result is 2. Unless it is your birthday -- on that day, your speed can be 5 higher in all cases. 
+
+caughtSpeeding(60, false) → 0
+caughtSpeeding(65, false) → 1
+caughtSpeeding(65, true) → 0
+
+public int caughtSpeeding(int speed, boolean isBirthday)
+
+  if (isBirthday)
+    speed -= 5;
+  if (speed <= 60)
+    return 0;
+  else if (speed <= 80)
+    return 1;
+  else
+    return 2;
+
+Expected	Run		
+caughtSpeeding(60, false) → 0	0	OK	    
+caughtSpeeding(65, false) → 1	1	OK	    
+caughtSpeeding(65, true) → 0	0	OK	    
+caughtSpeeding(80, false) → 1	1	OK	    
+caughtSpeeding(85, false) → 2	2	OK	    
+caughtSpeeding(85, true) → 1	1	OK	    
+caughtSpeeding(75, false) → 1	1	OK	    
+caughtSpeeding(75, true) → 1	1	OK	    
+caughtSpeeding(40, false) → 0	0	OK	    
+caughtSpeeding(40, true) → 0	0	OK	    
+caughtSpeeding(86, true) → 2	2	OK	    
+
+5. sortaSum 
+
+Given 2 ints, a and b, return their sum. However, sums in the range 10..19 inclusive, are forbidden, so in that case just return 20. 
+
+sortaSum(3, 4) → 7
+sortaSum(9, 4) → 20
+sortaSum(10, 11) → 21
+
+public int sortaSum(int a, int b)
+
+  int sum = a + b;
+  if (sum >= 10 && sum <= 19)
+    return 20;
+  else
+    return sum;
+
+Expected	Run		
+sortaSum(3, 4) → 7	7	OK	    
+sortaSum(9, 4) → 20	20	OK	    
+sortaSum(10, 11) → 21	21	OK	    
+sortaSum(12, -3) → 9	9	OK	    
+sortaSum(-3, 12) → 9	9	OK	    
+sortaSum(4, 5) → 9	9	OK	    
+sortaSum(4, 6) → 20	20	OK	    
+sortaSum(14, 7) → 21	21	OK	    
+sortaSum(14, 6) → 20	20	OK	    
+
+6. alarmClock 
+
+Given a day of the week encoded as 0=Sun, 1=Mon, 2=Tue, ...6=Sat, and a boolean indicating if we are on vacation, return a string of the form "7:00" indicating when the alarm clock should ring. Weekdays, the alarm should be "7:00" and on the weekend it should be "10:00". Unless we are on vacation -- then on weekdays it should be "10:00" and weekends it should be "off". 
+
+alarmClock(1, false) → "7:00"
+alarmClock(5, false) → "7:00"
+alarmClock(0, false) → "10:00"
+
+public String alarmClock(int day, boolean vacation) 
+
+  String result = "7:00";
+  boolean weekend = (day == 0 || day == 6);
+
+  if (weekend)
+    result = vacation ? "off" : "10:00";
+  else
+    result = vacation ? "10:00" : "7:00";
+    
+  return result;
+
+
+Expected	Run		
+alarmClock(1, false) → "7:00"	"7:00"	OK	    
+alarmClock(5, false) → "7:00"	"7:00"	OK	    
+alarmClock(0, false) → "10:00"	"10:00"	OK	    
+alarmClock(6, false) → "10:00"	"10:00"	OK	    
+alarmClock(0, true) → "off"	"off"	OK	    
+alarmClock(6, true) → "off"	"off"	OK	    
+alarmClock(1, true) → "10:00"	"10:00"	OK	   
+
+7. love6 
+
+The number 6 is a truly great number. Given two int values, a and b, return true if either one is 6. Or if their sum or difference is 6.
+
+love6(6, 4) → true
+love6(4, 5) → false
+love6(1, 5) → true
+
+public boolean love6(int a, int b) 
+
+  return a == 6 || b == 6 || a+b == 6 || a-b == 6 || b-a == 6;
+
+Expected	Run		
+love6(6, 4) → true	true	OK	    
+love6(4, 5) → false	false	OK	    
+love6(1, 5) → true	true	OK	    
+love6(1, 6) → true	true	OK	    
+love6(1, 8) → false	false	OK	    
+love6(1, 7) → true	true	OK	    
+love6(7, 5) → false	false	OK	    
+love6(8, 2) → true	true	OK	    
+love6(6, 6) → true	true	OK	    
+love6(-6, 2) → false	false	OK	    
+love6(-4, -10) → true	true	OK	    
+love6(-7, 1) → false	false	OK	    
+love6(7, -1) → true	true	OK	   
+
+8. in1To10
+
+Given a number n, return true if n is in the range 1..10, inclusive. Unless "outsideMode" is true, in which case return true if the number is less or equal to 1, or greater or equal to 10. 
+
+in1To10(5, false) → true
+in1To10(11, false) → false
+in1To10(11, true) → true
+
+public boolean in1To10(int n, boolean outsideMode)
+
+  if (outsideMode)
+    return n <= 1 || n >= 10;
+  else
+    return n >= 1 && n <= 10;
+
+Expected	Run		
+in1To10(5, false) → true	true	OK	    
+in1To10(11, false) → false	false	OK	    
+in1To10(11, true) → true	true	OK	    
+in1To10(10, false) → true	true	OK	    
+in1To10(10, true) → true	true	OK	    
+in1To10(9, false) → true	true	OK	    
+in1To10(9, true) → false	false	OK	    
+in1To10(1, false) → true	true	OK	    
+in1To10(1, true) → true	true	OK	    
+in1To10(0, false) → false	false	OK	    
+in1To10(0, true) → true	true	OK	    
+in1To10(-1, false) → false	false	OK	   
+
+9. specialEleven 
+
+We'll say a number is special if it is a multiple of 11 or if it is one more than a multiple of 11. Return true if the given non-negative number is special.
+
+specialEleven(22) → true
+specialEleven(23) → true
+specialEleven(24) → false
+
+public boolean specialEleven(int n)
+
+  return n % 11 == 0 || (n-1) % 11 == 0;
+
+Expected	Run		
+specialEleven(22) → true	true	OK	    
+specialEleven(23) → true	true	OK	    
+specialEleven(24) → false	false	OK	    
+specialEleven(21) → false	false	OK	    
+specialEleven(11) → true	true	OK	    
+specialEleven(12) → true	true	OK	    
+specialEleven(10) → false	false	OK	    
+specialEleven(0) → true	true	OK	    
+specialEleven(1) → true	true	OK	    
+specialEleven(2) → false	false	OK	    
+specialEleven(121) → true	true	OK	    
+specialEleven(122) → true	true	OK	    
+specialEleven(123) → false	false	OK	   
+
+10. more20 
+
+Return true if the given non-negative number is 1 or 2 more than a multiple of 20.
+
+more20(20) → false
+more20(21) → true
+more20(22) → true
+
+public boolean more20(int n)
+
+  return (n-1) % 20 == 0 || (n-2) % 20 == 0;
+
+Expected	Run		
+more20(20) → false	false	OK	    
+more20(21) → true	true	OK	    
+more20(22) → true	true	OK	    
+more20(23) → false	false	OK	    
+more20(25) → false	false	OK	   
+more20(60) → false	false	OK	    
+more20(61) → true	true	OK	    
+more20(62) → true	true	OK	    
+
+11. old35 
+
+Return true if the given non-negative number is a multiple of 3 or 5, but not both.
+
+old35(3) → true
+old35(10) → true
+old35(15) → false
+
+public boolean old35(int n)
+
+  return (n%3==0) != (n%5==0);
+
+Expected	Run		
+old35(3) → true	true	OK	    
+old35(10) → true	true	OK	    
+old35(15) → false	false	OK	    
+old35(5) → true	true	OK	    
+old35(9) → true	true	OK	    
+old35(8) → false	false	OK	   
+
+12. less20 
+
+Return true if the given non-negative number is 1 or 2 less than a multiple of 20.
+
+less20(18) → true
+less20(19) → true
+less20(20) → false
+
+public boolean less20(int n)
+
+  return (n+1) % 20 == 0 || (n+2) % 20 == 0;
+
+Expected	Run		
+less20(18) → true	true	OK	    
+less20(19) → true	true	OK	    
+less20(20) → false	false	OK	    
+less20(8) → false	false	OK	    
+less20(17) → false	false	OK	    
+less20(23) → false	false	OK	    
+less20(25) → false	false	OK	    
+less20(30) → false	false	OK	    
+less20(31) → false	false	OK	    
+less20(58) → true	true	OK	    
+less20(59) → true	true	OK	    
+less20(60) → false	false	OK	    
+less20(61) → false	false	OK	  
+
+13. nearTen 
+
+Given a non-negative number "num", return true if num is within 2 of a multiple of 10.
+
+nearTen(12) → true
+nearTen(17) → false
+nearTen(19) → true
+
+public boolean nearTen(int num)
+
+  return num % 10 <= 2 || num % 10 >= 8;
+
+Expected	Run		
+nearTen(12) → true	true	OK	    
+nearTen(17) → false	false	OK	    
+nearTen(19) → true	true	OK	    
+nearTen(10) → true	true	OK	    
+nearTen(11) → true	true	OK	  
+nearTen(3) → false	false	OK	    
+nearTen(1) → true	true	OK	   
+
+14. teenSum 
+
+Given 2 ints, a and b, return their sum. However, "teen" values in the range 13..19 inclusive, are extra lucky. So if either value is a teen, just return 19. 
+
+teenSum(3, 4) → 7
+teenSum(10, 13) → 19
+teenSum(13, 2) → 19
+
+public int teenSum(int a, int b)
+
+  if ((a >= 13 && a <= 19) || (b >= 13 && b <= 19))
+    return 19;
+  else
+    return a + b;
+}
+
+Expected	Run		
+teenSum(3, 4) → 7	7	OK	    
+teenSum(10, 13) → 19	19	OK	    
+teenSum(13, 2) → 19	19	OK	    
+teenSum(3, 19) → 19	19	OK	    
+teenSum(13, 13) → 19	19	OK	    
+teenSum(10, 10) → 20	20	OK	  
+
+15. answerCell 
+
+Your cell phone rings. Return true if you should answer it. Normally you answer, except in the morning you only answer if it is your mom calling. In all cases, if you are asleep, you do not answer. 
+
+answerCell(false, false, false) → true
+answerCell(false, false, true) → false
+answerCell(true, false, false) → false
+
+public boolean answerCell(boolean morning, boolean mom, boolean asleep)
+
+  if (asleep  || (morning && !mom))
+    return false;
+  else
+    return true;
+
+Expected	Run		
+answerCell(false, false, false) → true	true	OK	    
+answerCell(false, false, true) → false	false	OK	    
+answerCell(true, false, false) → false	false	OK	    
+answerCell(true, true, false) → true	true	OK	    
+answerCell(false, true, false) → true	true	OK	    
+answerCell(true, true, true) → false	false	OK	   
+
+16. teaParty 
+
+We are having a party with amounts of tea and candy. Return the int outcome of the party encoded as 0=bad, 1=good, or 2=great. A party is good (1) if both tea and candy are at least 5. However, if either tea or candy is at least double the amount of the other one, the party is great (2). However, in all cases, if either tea or candy is less than 5, the party is always bad (0). 
+
+teaParty(6, 8) → 1
+teaParty(3, 8) → 0
+teaParty(20, 6) → 2
+
+public int teaParty(int tea, int candy)
+
+  if (tea < 5 || candy < 5)
+    return 0;
+  else if (Math.max(tea, candy) >= 2 * Math.min(tea, candy))
+    return 2;
+  else
+    return 1;
+
+Expected	Run		
+teaParty(6, 8) → 1	1	OK	    
+teaParty(3, 8) → 0	0	OK	    
+teaParty(20, 6) → 2	2	OK	    
+teaParty(12, 6) → 2	2	OK	    
+teaParty(11, 6) → 1	1	OK	    
+teaParty(11, 4) → 0	0	OK	    
+teaParty(4, 5) → 0	0	OK	    
+teaParty(5, 5) → 1	1	OK	   
+
+17. fizzString
+
+Given a string str, if the string starts with "f" return "Fizz". If the string ends with "b" return "Buzz". If both the "f" and "b" conditions are true, return "FizzBuzz". In all other cases, return the string unchanged. (See also: FizzBuzz Code) 
+
+fizzString("fig") → "Fizz"
+fizzString("dib") → "Buzz"
+fizzString("fib") → "FizzBuzz"
+
+public String fizzString(String str)
+  if (str.length() < 1)
+    return str;
+  else if (str.charAt(0)=='f' && str.charAt(str.length()-1)=='b')  
+    return "FizzBuzz";
+  else if (str.charAt(0)=='f')
+    return "Fizz";
+  else if (str.charAt(str.length()-1)=='b')
+    return "Buzz";
+  else
+    return str;
+
+Expected	Run		
+fizzString("fig") → "Fizz"	"Fizz"	OK	    
+fizzString("dib") → "Buzz"	"Buzz"	OK	    
+fizzString("fib") → "FizzBuzz"	"FizzBuzz"	OK	    
+fizzString("abc") → "abc"	"abc"	OK	    
+fizzString("fooo") → "Fizz"	"Fizz"	OK	    
+fizzString("booo") → "booo"	"booo"	OK	    
+fizzString("ooob") → "Buzz"	"Buzz"	OK	    
+fizzString("fooob") → "FizzBuzz"	"FizzBuzz"	OK	    
+fizzString("f") → "Fizz"	"Fizz"	OK	    
+fizzString("b") → "Buzz"	"Buzz"	OK	   
+
+18. fizzString2 
+
+Given an int n, return the string form of the number followed by "!". So the int 6 yields "6!". Except if the number is divisible by 3 use "Fizz" instead of the number, and if the number is divisible by 5 use "Buzz", and if divisible by both 3 and 5, use "FizzBuzz".
+
+fizzString2(1) → "1!"
+fizzString2(2) → "2!"
+fizzString2(3) → "Fizz!"
+
+public String fizzString2(int n)
+
+  boolean fizz = n % 3 == 0;
+  boolean buzz = n % 5 == 0;
+  
+  if (fizz && buzz)
+    return "FizzBuzz!";
+  else if (fizz)
+    return "Fizz!";
+  else if (buzz)
+    return "Buzz!";
+  else
+    return String.valueOf(n)+"!";
+
+Expected	Run		
+fizzString2(1) → "1!"	"1!"	OK	    
+fizzString2(3) → "Fizz!"	"Fizz!"	OK	    
+fizzString2(5) → "Buzz!"	"Buzz!"	OK	    
+fizzString2(6) → "Fizz!"	"Fizz!"	OK	    
+fizzString2(9) → "Fizz!"	"Fizz!"	OK	    
+fizzString2(15) → "FizzBuzz!"	"FizzBuzz!"	OK	    
+
+19. twoAsOne
+
+Given three ints, a b c, return true if it is possible to add two of the ints to get the third. 
+
+twoAsOne(1, 2, 3) → true
+twoAsOne(3, 1, 2) → true
+twoAsOne(3, 2, 2) → false
+
+public boolean twoAsOne(int a, int b, int c)
+
+  return a == (b+c) || b == (a+c) || c == (a+b);
+
+Expected	Run		
+twoAsOne(1, 2, 3) → true	true	OK	    
+twoAsOne(3, 1, 2) → true	true	OK	    
+twoAsOne(3, 2, 2) → false	false	OK	    
+twoAsOne(2, 3, 1) → true	true	OK	    
+twoAsOne(5, 3, -2) → true	true	OK	    
+
+20. inOrder 
+
+Given three ints, a b c, return true if b is greater than a, and c is greater than b. However, with the exception that if "bOk" is true, b does not need to be greater than a. 
+
+inOrder(1, 2, 4, false) → true
+inOrder(1, 2, 1, false) → false
+inOrder(1, 1, 2, true) → true
+
+public boolean inOrder(int a, int b, int c, boolean bOk)
+
+  return (b > a || bOk ) && c > b;
+
+Expected	Run		
+inOrder(1, 2, 4, false) → true	true	OK	    
+inOrder(1, 2, 1, false) → false	false	OK	    
+inOrder(1, 1, 2, true) → true	true	OK	    
+inOrder(3, 2, 4, false) → false	false	OK	    
+inOrder(2, 3, 4, false) → true	true	OK	    
+inOrder(3, 2, 4, true) → true	true	OK	    
+
+21. inOrderEqual 
+
+Given three ints, a b c, return true if they are in strict increasing order, such as 2 5 11, or 5 6 7, but not 6 5 7 or 5 5 7. However, with the exception that if "equalOk" is true, equality is allowed, such as 5 5 7 or 5 5 5. 
+
+inOrderEqual(2, 5, 11, false) → true
+inOrderEqual(5, 7, 6, false) → false
+inOrderEqual(5, 5, 7, true) → true
+
+  if (equalOk)
+    return a <= b && b <= c;
+  else
+    return a < b && b < c;
+
+Expected	Run		
+inOrderEqual(2, 5, 11, false) → true	true	OK	    
+inOrderEqual(5, 7, 6, false) → false	false	OK	    
+inOrderEqual(5, 5, 7, true) → true	true	OK	    
+inOrderEqual(5, 5, 7, false) → false	false	OK	    
+inOrderEqual(2, 5, 4, false) → false	false	OK	  
+
+22. lastDigit 
+
+Given three ints, a b c, return true if two or more of them have the same rightmost digit. The ints are non-negative.
+
+lastDigit(23, 19, 13) → true
+lastDigit(23, 19, 12) → false
+lastDigit(23, 19, 3) → true
+
+public boolean lastDigit(int a, int b, int c)
+
+  int a10 = a % 10; int b10 = b % 10; int c10 = c % 10;
+  return a10 == b10 || a10 == c10 || b10 == c10;
+
+Expected	Run		
+lastDigit(23, 19, 13) → true	true	OK	    
+lastDigit(23, 19, 12) → false	false	OK	    
+lastDigit(23, 19, 3) → true	true	OK	    
+lastDigit(23, 19, 39) → true	true	OK	    
+lastDigit(1, 2, 3) → false	false	OK	    
+lastDigit(1, 1, 2) → true	true	OK	    
+lastDigit(1, 2, 2) → true	true	OK	   
+
+23. lessBy10
+
+Given three ints, a b c, return true if one of them is 10 or more less than one of the others. 
+
+lessBy10(1, 7, 11) → true
+lessBy10(1, 7, 10) → false
+lessBy10(11, 1, 7) → true
+
+public boolean lessBy10(int a, int b, int c)
+
+  return Math.max(a, Math.max(b,c)) - Math.min(a, Math.min(b,c)) >= 10;
+
+Expected	Run		
+lessBy10(1, 7, 11) → true	true	OK	    
+lessBy10(1, 7, 10) → false	false	OK	    
+lessBy10(11, 1, 7) → true	true	OK	    
+lessBy10(10, 7, 1) → false	false	OK	    
+lessBy10(-10, 2, 2) → true	true	OK	    
+lessBy10(2, 11, 11) → false	false	OK	    
+
+24. withoutDoubles
+
+Return the sum of two 6-sided dice rolls, each in the range 1..6. However, if noDoubles is true, if the two dice show the same value, increment one die to the next value, wrapping around to 1 if its value was 6. 
+
+withoutDoubles(2, 3, true) → 5
+withoutDoubles(3, 3, true) → 7
+withoutDoubles(3, 3, false) → 6
+
+public int withoutDoubles(int die1, int die2, boolean noDoubles)
+
+  if (noDoubles && (die1 == die2))
+    if (die1 == 6)
+      die1 = 1;
+    else
+      die1 += 1;
+      
+  return die1 + die2;
+
+Expected	Run		
+withoutDoubles(2, 3, true) → 5	5	OK	    
+withoutDoubles(3, 3, true) → 7	7	OK	    
+withoutDoubles(3, 3, false) → 6	6	OK	    
+withoutDoubles(2, 3, false) → 5	5	OK	    
+withoutDoubles(5, 4, true) → 9	9	OK	    
+withoutDoubles(5, 4, false) → 9	9	OK	    
+withoutDoubles(5, 5, true) → 11	11	OK	    
+withoutDoubles(5, 5, false) → 10	10	OK	    
+withoutDoubles(6, 6, true) → 7	7	OK	    
+withoutDoubles(6, 6, false) → 12	12	OK	   
+
+25. maxMod5 
+
+Given two int values, return whichever value is larger. However if the two values have the same remainder when divided by 5, then the return the smaller value. However, in all cases, if the two values are the same, return 0.
+
+maxMod5(2, 3) → 3
+maxMod5(6, 2) → 6
+maxMod5(3, 2) → 3
+
+public int maxMod5(int a, int b)
+
+  if (a == b)
+    return 0;
+  else if (a % 5 == b % 5)
+    return Math.min(a,b);
+  else
+    return Math.max(a,b);
+
+xpected	Run		
+maxMod5(2, 3) → 3	3	OK	    
+maxMod5(6, 2) → 6	6	OK	    
+maxMod5(3, 2) → 3	3	OK	    
+maxMod5(8, 12) → 12	12	OK	    
+maxMod5(7, 12) → 7	7	OK	    
+maxMod5(11, 6) → 6	6	OK	    
+maxMod5(2, 7) → 2	2	OK	    
+maxMod5(7, 7) → 0	0	OK	   
+
+26. redTicket 
+
+You have a red lottery ticket showing ints a, b, and c, each of which is 0, 1, or 2. If they are all the value 2, the result is 10. Otherwise if they are all the same, the result is 5. Otherwise so long as both b and c are different from a, the result is 1. Otherwise the result is 0. 
+
+redTicket(2, 2, 2) → 10
+redTicket(2, 2, 1) → 0
+redTicket(0, 0, 0) → 5
+
+public int redTicket(int a, int b, int c) 
+
+  if (a == 2 && b == 2 && c == 2)
+    return 10;
+  else if (a == b && a == c)
+    return 5;
+  else if (a != b && a != c)
+    return 1;
+  else
+    return 0;
+
+Expected	Run		
+redTicket(2, 2, 2) → 10	10	OK	    
+redTicket(2, 2, 1) → 0	0	OK	    
+redTicket(0, 0, 0) → 5	5	OK	    
+redTicket(2, 0, 0) → 1	1	OK	  
+
+27. greenTicket 
+
+You have a green lottery ticket, with ints a, b, and c on it. If the numbers are all different from each other, the result is 0. If all of the numbers are the same, the result is 20. If two of the numbers are the same, the result is 10. 
+
+greenTicket(1, 2, 3) → 0
+greenTicket(2, 2, 2) → 20
+greenTicket(1, 1, 2) → 10
+
+public int greenTicket(int a, int b, int c) 
+
+  if (a == b && a == c && b == c)
+    return 20;
+  else if (a == b || a == c || b == c)
+    return 10;
+  else
+    return 0;
+
+Expected	Run		
+greenTicket(1, 2, 3) → 0	0	OK	    
+greenTicket(2, 2, 2) → 20	20	OK	    
+greenTicket(1, 1, 2) → 10	10	OK	    
+greenTicket(2, 1, 1) → 10	10	OK	    
+greenTicket(1, 2, 1) → 10	10	OK	    
+greenTicket(3, 2, 1) → 0	0	OK	    
+greenTicket(0, 0, 0) → 20	20	OK	    
+
+28. blueTicket 
+
+You have a blue lottery ticket, with ints a, b, and c on it. This makes three pairs, which we'll call ab, bc, and ac. Consider the sum of the numbers in each pair. If any pair sums to exactly 10, the result is 10. Otherwise if the ab sum is exactly 10 more than either bc or ac sums, the result is 5. Otherwise the result is 0. 
+
+blueTicket(9, 1, 0) → 10
+blueTicket(9, 2, 0) → 0
+blueTicket(6, 1, 4) → 10
+
+public int blueTicket(int a, int b, int c)
+
+  int ab = a + b; int bc = b + c; int ac = a + c;
+  
+  if (ab == 10 || bc == 10 || ac == 10)
+    return 10;
+  else if (ab == bc + 10 || ab == ac + 10)
+    return 5;
+  else
+    return 0;
+
+Expected	Run		
+blueTicket(9, 1, 0) → 10	10	OK	    
+blueTicket(9, 2, 0) → 0	0	OK	    
+blueTicket(6, 1, 4) → 10	10	OK	    
+blueTicket(6, 1, 5) → 0	0	OK	    
+blueTicket(10, 0, 0) → 10	10	OK	    
+blueTicket(15, 0, 5) → 5	5	OK	    
+blueTicket(5, 15, 5) → 10	10	OK	    
+blueTicket(4, 11, 1) → 5	5	OK	    
+blueTicket(13, 2, 3) → 5	5	OK	    
+
+29. shareDigit 
+
+Given two ints, each in the range 10..99, return true if there is a digit that appears in both numbers, such as the 2 in 12 and 23.
+
+shareDigit(12, 23) → true
+shareDigit(12, 43) → false
+shareDigit(12, 44) → false
+
+public boolean shareDigit(int a, int b)
+
+  Set<Integer> set = new HashSet<Integer>();
+  
+  while (a > 0) {
+    if (!set.contains(a % 10))
+      set.add(a % 10);
+    a /= 10;
+  }
+  
+  while (b > 0) {
+    if (set.contains(b % 10))
+      return true;
+    b /= 10;
+  }
+  
+  return false;
+
+Expected	Run		
+shareDigit(12, 23) → true	true	OK	    
+shareDigit(12, 43) → false	false	OK	    
+shareDigit(12, 44) → false	false	OK	    
+shareDigit(23, 12) → true	true	OK	    
+shareDigit(23, 39) → true	true	OK	    
+shareDigit(23, 19) → false	false	OK	    
+shareDigit(30, 90) → true	true	OK	 
+
+30. sumLimit 
+
+Given 2 non-negative ints, a and b, return their sum, so long as the sum has the same number of digits as a. If the sum has more digits than a, just return a without b.
+
+sumLimit(2, 3) → 5
+sumLimit(8, 3) → 8
+sumLimit(8, 1) → 9
+
+public int sumLimit(int a, int b) 
+
+  if (String.valueOf(a).length() == String.valueOf(a+b).length())
+    return a + b;
+  else
+    return a;
+
+Expected	Run		
+sumLimit(2, 3) → 5	5	OK	    
+sumLimit(8, 3) → 8	8	OK	    
+sumLimit(8, 1) → 9	9	OK	    
+sumLimit(11, 39) → 50	50	OK	    
+sumLimit(11, 99) → 11	11	OK	    
+sumLimit(0, 0) → 0	0	OK	    
+sumLimit(99, 0) → 99	99	OK	   
+

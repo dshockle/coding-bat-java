@@ -1,0 +1,1003 @@
+﻿CODING.BAT EXERCISES
+
+Java
+
+Array-2
+
+1. countEvens 
+
+Return the number of even ints in the given array. 
+
+countEvens({2, 1, 2, 3, 4}) → 3
+countEvens({2, 2, 0}) → 3
+countEvens({1, 3, 5}) → 0
+
+public int countEvens(int[] nums)
+
+  int count = 0;
+  
+  for (int n : nums)
+    if (n % 2 == 0)
+      count++;
+      
+  return count;
+
+Expected	Run		
+countEvens({2, 1, 2, 3, 4}) → 3	3	OK	    
+countEvens({2, 2, 0}) → 3	3	OK	    
+countEvens({1, 3, 5}) → 0	0	OK	    
+countEvens({}) → 0	0	OK	    
+countEvens({2}) → 1	1	OK	    
+
+2. bigDiff 
+
+Given an array length 1 or more of ints, return the difference between the largest and smallest values in the array.
+
+bigDiff({10, 3, 5, 6}) → 7
+bigDiff({7, 2, 10, 9}) → 8
+bigDiff({2, 10, 7, 2}) → 8
+
+public int bigDiff(int[] nums)
+
+  Arrays.sort(nums);
+  return Math.abs(nums[0] - nums[nums.length-1]);
+
+Expected	Run		
+bigDiff({10, 3, 5, 6}) → 7	7	OK	    
+bigDiff({7, 2, 10, 9}) → 8	8	OK	    
+bigDiff({2, 10, 7, 2}) → 8	8	OK	    
+bigDiff({2, 10}) → 8	8	OK	    
+bigDiff({10, 2}) → 8	8	OK	    
+bigDiff({10, 0}) → 10	10	OK	    
+bigDiff({2, 3}) → 1	1	OK	    
+bigDiff({2, 2}) → 0	0	OK	    
+bigDiff({2}) → 0	0	OK	   
+
+3. centeredAverage 
+
+Return the "centered" average of an array of ints, which we'll say is the mean average of the values, except ignoring the largest and smallest values in the array. If there are multiple copies of the smallest value, ignore just one copy, and likewise for the largest value. Use int division to produce the final average. You may assume that the array is length 3 or more. 
+
+centeredAverage({1, 2, 3, 4, 100}) → 3
+centeredAverage({1, 1, 5, 5, 10, 8, 7}) → 5
+centeredAverage({-10, -4, -2, -4, -2, 0}) → -3
+
+public int centeredAverage(int[] nums) 
+
+  int sum=0, max=nums[0], min=nums[0];
+  
+  for(int n : nums){
+    if (n < min)
+      min = n;
+    if (n > max)
+      max = n;
+    sum += n;
+  }
+  
+  return (sum - max - min)/(nums.length - 2);
+
+Expected	Run		
+centeredAverage({1, 2, 3, 4, 100}) → 3	3	OK	    
+centeredAverage({1, 1, 5, 5, 10, 8, 7}) → 5	5	OK	    
+centeredAverage({-10, -4, -2, -4, -2, 0}) → -3	-3	OK	    
+centeredAverage({5, 3, 4, 6, 2}) → 4	4	OK	    
+centeredAverage({5, 3, 4, 0, 100}) → 4	4	OK	    
+centeredAverage({100, 0, 5, 3, 4}) → 4	4	OK	    
+centeredAverage({4, 0, 100}) → 4	4	OK	    
+centeredAverage({0, 2, 3, 4, 100}) → 3	3	OK	    
+centeredAverage({1, 1, 100}) → 1	1	OK	    
+centeredAverage({7, 7, 7}) → 7	7	OK	   
+
+4. sum13
+
+Return the sum of the numbers in the array, returning 0 for an empty array. Except the number 13 is very unlucky, so it does not count and numbers that come immediately after a 13 also do not count. 
+
+sum13({1, 2, 2, 1}) → 6
+sum13({1, 1}) → 2
+sum13({1, 2, 2, 1, 13}) → 6
+
+public int sum13(int[] nums)
+
+  int sum = 0;
+  for(int i = 0; i < nums.length; i++)
+    if (nums[i]==13)
+      i++;
+    else
+      sum += nums[i];
+      
+  return sum;
+
+xpected	Run		
+sum13({1, 2, 2, 1}) → 6	6	OK	    
+sum13({1, 1}) → 2	2	OK	    
+sum13({1, 2, 2, 1, 13}) → 6	6	OK	    
+sum13({1, 2, 13, 2, 1, 13}) → 4	4	OK	    
+sum13({13, 1, 2, 13, 2, 1, 13}) → 3	3	OK	    
+sum13({}) → 0	0	OK	    
+sum13({13}) → 0	0	OK	    
+sum13({13, 13}) → 0	0	OK	    
+
+5. sum67 
+
+Return the sum of the numbers in the array, except ignore sections of numbers starting with a 6 and extending to the next 7 (every 6 will be followed by at least one 7). Return 0 for no numbers. 
+
+sum67({1, 2, 2}) → 5
+sum67({1, 2, 2, 6, 99, 99, 7}) → 5
+sum67({1, 1, 6, 7, 2}) → 4
+
+public int sum67(int[] nums) 
+
+  int sum = 0;
+  boolean skip = false;
+  
+  for(int n : nums){
+    if (n == 6)
+      skip = true;
+    if (!skip)
+      sum += n;
+    if (n == 7)
+      skip = false;
+  }
+  
+  return sum;
+
+Expected	Run		
+sum67({1, 2, 2}) → 5	5	OK	    
+sum67({1, 2, 2, 6, 99, 99, 7}) → 5	5	OK	    
+sum67({1, 1, 6, 7, 2}) → 4	4	OK	    
+sum67({1, 6, 2, 2, 7, 1, 6, 99, 99, 7}) → 2	2	OK	    
+sum67({1, 6, 2, 6, 2, 7, 1, 6, 99, 99, 7}) → 2	2	OK	    
+sum67({2, 7, 6, 2, 6, 7, 2, 7}) → 18	18	OK	    
+sum67({2, 7, 6, 2, 6, 2, 7}) → 9	9	OK	    
+sum67({1, 6, 7, 7}) → 8	8	OK	    
+sum67({6, 7, 1, 6, 7, 7}) → 8	8	OK	    
+sum67({6, 8, 1, 6, 7}) → 0	0	OK	    
+sum67({}) → 0	0	OK	   
+
+6. has22 
+
+Given an array of ints, return true if the array contains a 2 next to a 2 somewhere. 
+
+has22({1, 2, 2}) → true
+has22({1, 2, 1, 2}) → false
+has22({2, 1, 2}) → false
+
+public boolean has22(int[] nums) 
+
+  for(int i = 1; i < nums.length; i++)
+    if (nums[i]==2 && nums[i-1]==2)
+      return true;
+      
+  return false;
+
+Expected	Run		
+has22({1, 2, 2}) → true	true	OK	    
+has22({1, 2, 1, 2}) → false	false	OK	    
+has22({2, 1, 2}) → false	false	OK	    
+has22({2, 2, 1, 2}) → true	true	OK	    
+has22({1, 3, 2}) → false	false	OK	    
+has22({1, 3, 2, 2}) → true	true	OK	    
+has22({2, 3, 2, 2}) → true	true	OK	    
+has22({4, 2, 4, 2, 2, 5}) → true	true	OK	    
+has22({1, 2}) → false	false	OK	    
+has22({2, 2}) → true	true	OK	    
+has22({2}) → false	false	OK	    
+has22({}) → false	false	OK	   
+
+7. lucky13 
+
+Given an array of ints, return true if the array contains no 1's and no 3's. 
+
+lucky13({0, 2, 4}) → true
+lucky13({1, 2, 3}) → false
+lucky13({1, 2, 4}) → false
+
+public boolean lucky13(int[] nums)
+
+  for(int n : nums)
+    if (n == 1 || n == 3)
+      return false;
+      
+  return true;
+
+Expected	Run		
+lucky13({0, 2, 4}) → true	true	OK	    
+lucky13({1, 2, 3}) → false	false	OK	    
+lucky13({1, 2, 4}) → false	false	OK	    
+lucky13({1, 2}) → false	false	OK	    
+lucky13({2, 2}) → true	true	OK	    
+lucky13({2}) → true	true	OK	    
+lucky13({3}) → false	false	OK	    
+lucky13({}) → true	true	OK	   
+
+8. sum28 
+
+Given an array of ints, return true if the sum of all the 2's in the array is exactly 8. 
+
+sum28({2, 3, 2, 2, 4, 2}) → true
+sum28({2, 3, 2, 2, 4, 2, 2}) → false
+sum28({1, 2, 3, 4}) → false
+
+public boolean sum28(int[] nums)
+
+  int sum = 0;
+  for(int n : nums)
+    if (n == 2)
+      sum += n;
+      
+  return sum == 8;
+
+Expected	Run		
+sum28({2, 3, 2, 2, 4, 2}) → true	true	OK	    
+sum28({2, 3, 2, 2, 4, 2, 2}) → false	false	OK	    
+sum28({1, 2, 3, 4}) → false	false	OK	    
+sum28({2, 2, 2, 2}) → true	true	OK	    
+sum28({1, 2, 2, 2, 2, 4}) → true	true	OK	    
+sum28({}) → false	false	OK	    
+sum28({2}) → false	false	OK	  
+
+9. more14 
+
+Given an array of ints, return true if the number of 1's is greater than the number of 4's 
+
+more14({1, 4, 1}) → true
+more14({1, 4, 1, 4}) → false
+more14({1, 1}) → true
+
+public boolean more14(int[] nums) 
+
+  int onesMinusFours = 0;
+  
+  for(int n : nums)
+    if (n == 1)
+      onesMinusFours++;
+    else if (n == 4)
+      onesMinusFours--;
+      
+  return onesMinusFours > 0;
+
+Expected	Run		
+more14({1, 4, 1}) → true	true	OK	    
+more14({1, 4, 1, 4}) → false	false	OK	    
+more14({1, 1}) → true	true	OK	    
+more14({1, 6, 6}) → true	true	OK	    
+more14({1}) → true	true	OK	    
+more14({1, 4}) → false	false	OK	    
+more14({}) → false	false	OK	   
+
+10. fizzArray 
+
+Given a number n, create and return a new int array of length n, containing the numbers 0, 1, 2, ... n-1. The given n may be 0, in which case just return a length 0 array.
+
+fizzArray(4) → {0, 1, 2, 3}
+fizzArray(1) → {0}
+fizzArray(10) → {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+public int[] fizzArray(int n) 
+
+   int[] result = new int[n];
+   
+   for(int i = 0; i < n; i++)
+     result[i] = i;
+   
+   return result;
+
+Expected	Run		
+fizzArray(4) → {0, 1, 2, 3}	{0, 1, 2, 3}	OK	    
+fizzArray(1) → {0}	{0}	OK	    
+fizzArray(10) → {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}	{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}	OK	    
+fizzArray(0) → {}	{}	OK	    
+fizzArray(2) → {0, 1}	{0, 1}	OK	  
+
+11. only14
+
+Given an array of ints, return true if every element is a 1 or a 4. 
+
+only14({1, 4, 1, 4}) → true
+only14({1, 4, 2, 4}) → false
+only14({1, 1}) → true
+
+public boolean only14(int[] nums)
+
+  for(int n : nums)
+    if (n != 1 && n != 4)
+      return false;
+      
+  return true;
+
+Expected	Run		
+only14({1, 4, 1, 4}) → true	true	OK	    
+only14({1, 4, 2, 4}) → false	false	OK	    
+only14({1, 1}) → true	true	OK	    
+only14({4, 1}) → true	true	OK	    
+only14({2}) → false	false	OK	    
+only14({}) → true	true	OK	    
+only14({1, 4, 1, 3}) → false	false	OK	    
+only14({3, 1, 3}) → false	false	OK	    
+only14({1}) → true	true	OK	    
+only14({4}) → true	true	OK	 
+
+12. fizzArray2 
+
+Given a number n, create and return a new string array of length n, containing the strings "0", "1" "2" .. through n-1. N may be 0, in which case just return a length 0 array.
+
+fizzArray2(4) → {"0", "1", "2", "3"}
+fizzArray2(10) → {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+fizzArray2(2) → {"0", "1"}
+
+public String[] fizzArray2(int n) 
+
+  String[] result = new String[n];
+  for(int i = 0; i < n; i++)
+    result[i] = String.valueOf(i);
+    
+  return result;
+
+Expected	Run		
+fizzArray2(4) → {"0", "1", "2", "3"}	{"0", "1", "2", "3"}	OK	    
+fizzArray2(10) → {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}	{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}	OK	    
+fizzArray2(2) → {"0", "1"}	{"0", "1"}	OK	    
+fizzArray2(1) → {"0"}	{"0"}	OK	    
+fizzArray2(0) → {}	{}	OK	   
+
+13. no14
+
+Given an array of ints, return true if it contains no 1's or it contains no 4's. 
+
+no14({1, 2, 3}) → true
+no14({1, 2, 3, 4}) → false
+no14({2, 3, 4}) → true
+
+public boolean no14(int[] nums)
+
+  boolean no1 = true;
+  boolean no4 = true;
+  
+  for(int n : nums)
+    if (n == 1)
+      no1 = false;
+    else if (n == 4)
+      no4 = false;
+      
+  return no1 || no4;
+
+Expected	Run		
+no14({1, 2, 3}) → true	true	OK	    
+no14({1, 2, 3, 4}) → false	false	OK	    
+no14({2, 3, 4}) → true	true	OK	    
+no14({1, 1, 4, 4}) → false	false	OK	    
+no14({2, 2, 4, 4}) → true	true	OK	    
+no14({2, 3, 4, 1}) → false	false	OK	    
+no14({2, 1, 1}) → true	true	OK	    
+no14({1, 4}) → false	false	OK	    
+no14({2}) → true	true	OK	    
+no14({2, 1}) → true	true	OK	    
+no14({1}) → true	true	OK	    
+no14({4}) → true	true	OK	    
+no14({}) → true	true	OK	  
+
+14. isEverywhere 
+
+We'll say that a value is "everywhere" in an array if for every pair of adjacent elements in the array, at least one of the pair is that value. Return true if the given value is everywhere in the array. 
+
+isEverywhere({1, 2, 1, 3}, 1) → true
+isEverywhere({1, 2, 1, 3}, 2) → false
+isEverywhere({1, 2, 1, 3, 4}, 1) → false
+
+public boolean isEverywhere(int[] nums, int val) 
+
+  for(int i = 1; i < nums.length; i++)
+    if (val != nums[i-1] && val != nums[i])
+      return false;
+  
+  return true;
+
+Expected	Run		
+isEverywhere({1, 2, 1, 3}, 1) → true	true	OK	    
+isEverywhere({1, 2, 1, 3}, 2) → false	false	OK	    
+isEverywhere({1, 2, 1, 3, 4}, 1) → false	false	OK	    
+isEverywhere({2, 1, 2, 1}, 1) → true	true	OK	    
+isEverywhere({2, 1, 2, 1}, 2) → true	true	OK	    
+isEverywhere({2, 1, 2, 3, 1}, 2) → false	false	OK	    
+isEverywhere({3, 1}, 3) → true	true	OK	    
+isEverywhere({3, 1}, 2) → false	false	OK	    
+isEverywhere({3}, 1) → true	true	OK	    
+isEverywhere({}, 1) → true	true	OK	   
+
+15. either24 
+
+Given an array of ints, return true if the array contains a 2 next to a 2 or a 4 next to a 4, but not both. 
+
+either24({1, 2, 2}) → true
+either24({4, 4, 1}) → true
+either24({4, 4, 1, 2, 2}) → false
+
+  boolean has22 = false;
+  boolean has44 = false;
+  
+  for(int i = 1; i < nums.length; i++){
+    if (nums[i]==2 && nums[i-1]==2)
+      has22 = true;
+    if (nums[i]==4 && nums[i-1]==4)
+      has44 = true;
+  }
+  return has22 != has44;
+
+Expected	Run		
+either24({1, 2, 2}) → true	true	OK	    
+either24({4, 4, 1}) → true	true	OK	    
+either24({4, 4, 1, 2, 2}) → false	false	OK	    
+either24({1, 2, 3, 4}) → false	false	OK	    
+either24({3, 5, 9}) → false	false	OK	    
+either24({1, 2, 3, 4, 4}) → true	true	OK	    
+either24({2, 2, 3, 4}) → true	true	OK	    
+either24({1, 2, 3, 2, 2, 4}) → true	true	OK	    
+either24({1, 2, 3, 2, 2, 4, 4}) → false	false	OK	    
+either24({1, 2}) → false	false	OK	    
+either24({2, 2}) → true	true	OK	    
+either24({4, 4}) → true	true	OK	    
+either24({2}) → false	false	OK	    
+either24({}) → false	false	OK	   
+
+16. matchUp 
+
+Given arrays nums1 and nums2 of the same length, for every element in nums1, consider the corresponding element in nums2 (at the same index). Return the count of the number of times that the two elements differ by 2 or less, but are not equal. 
+
+matchUp({1, 2, 3}, {2, 3, 10}) → 2
+matchUp({1, 2, 3}, {2, 3, 5}) → 3
+matchUp({1, 2, 3}, {2, 3, 3}) → 2
+
+public int matchUp(int[] nums1, int[] nums2)
+
+  int count = 0;
+  for(int i = 0; i < nums1.length; i++){
+    int diff = Math.abs(nums1[i]-nums2[i]);
+    if (diff == 1 || diff == 2)
+      count++;
+  }
+  return count;
+
+Expected	Run		
+matchUp({1, 2, 3}, {2, 3, 10}) → 2	2	OK	    
+matchUp({1, 2, 3}, {2, 3, 5}) → 3	3	OK	    
+matchUp({1, 2, 3}, {2, 3, 3}) → 2	2	OK	    
+matchUp({5, 3}, {5, 5}) → 1	1	OK	    
+matchUp({5, 3}, {4, 4}) → 2	2	OK	    
+matchUp({5, 3}, {3, 3}) → 1	1	OK	    
+matchUp({5, 3}, {2, 2}) → 1	1	OK	    
+matchUp({5, 3}, {1, 1}) → 1	1	OK	    
+matchUp({5, 3}, {0, 0}) → 0	0	OK	    
+matchUp({4}, {4}) → 0	0	OK	   
+
+17. has77
+
+Given an array of ints, return true if the array contains two 7's next to each other, or there are two 7's separated by one element, such as with {7, 1, 7}. 
+
+has77({1, 7, 7}) → true
+has77({1, 7, 1, 7}) → true
+has77({1, 7, 1, 1, 7}) → false
+
+public boolean has77(int[] nums) 
+
+  for(int i = 1; i < nums.length; i++)
+    if(nums[i]==7)
+     if(nums[i-1]==7 || (i > 1 && nums[i-2]==7))
+       return true;
+       
+  return false;
+
+Expected	Run		
+has77({1, 7, 7}) → true	true	OK	    
+has77({1, 7, 1, 7}) → true	true	OK	    
+has77({1, 7, 1, 1, 7}) → false	false	OK	    
+has77({7, 7, 1, 1, 7}) → true	true	OK	    
+has77({2, 7, 2, 2, 7, 2}) → false	false	OK	    
+has77({2, 7, 2, 2, 7, 7}) → true	true	OK	    
+has77({7, 7, 7}) → true	true	OK	    
+has77({7, 1, 7}) → true	true	OK	    
+has77({7, 1, 1}) → false	false	OK	    
+has77({1, 2}) → false	false	OK	    
+has77({1, 7}) → false	false	OK	    
+has77({7}) → false	false	OK	   
+
+18. has12
+
+Given an array of ints, return true if there is a 1 in the array with a 2 somewhere later in the array. 
+
+has12({1, 3, 2}) → true
+has12({3, 1, 2}) → true
+has12({3, 1, 4, 5, 2}) → true
+
+  boolean has1 = false;
+  for(int n : nums){
+    if (n == 1)
+      has1 = true;
+    if (n == 2 && has1)
+      return true;
+  }
+  return false;
+
+19. modThree 
+
+Given an array of ints, return true if the array contains either 3 even or 3 odd values all next to each other. 
+
+modThree({2, 1, 3, 5}) → true
+modThree({2, 1, 2, 5}) → false
+modThree({2, 4, 2, 5}) → true
+
+public boolean modThree(int[] nums)
+
+  for(int i = 2; i < nums.length; i++)
+    if(nums[i]%2==nums[i-1]%2 && nums[i]%2==nums[i-2]%2)
+      return true;
+      
+  return false;
+
+Expected	Run		
+modThree({2, 1, 3, 5}) → true	true	OK	    
+modThree({2, 1, 2, 5}) → false	false	OK	    
+modThree({2, 4, 2, 5}) → true	true	OK	    
+modThree({1, 2, 1, 2, 1}) → false	false	OK	    
+modThree({9, 9, 9}) → true	true	OK	    
+modThree({1, 2, 1}) → false	false	OK	    
+modThree({1, 2}) → false	false	OK	    
+modThree({1}) → false	false	OK	    
+modThree({}) → false	false	OK	   
+
+20. haveThree 
+
+Given an array of ints, return true if the value 3 appears in the array exactly 3 times, and no 3's are next to each other. 
+
+haveThree({3, 1, 3, 1, 3}) → true
+haveThree({3, 1, 3, 3}) → false
+haveThree({3, 4, 3, 3, 4}) → false
+
+public boolean haveThree(int[] nums) 
+
+  int count = 0;
+  
+  for (int i = 0; i < nums.length; i++)
+    if (i > 0 && nums[i]==3 && nums[i-1]==3)
+      return false;
+    else if (nums[i]==3)
+      count++;
+      
+  return count == 3;
+
+Expected	Run		
+haveThree({3, 1, 3, 1, 3}) → true	true	OK	    
+haveThree({3, 1, 3, 3}) → false	false	OK	    
+haveThree({3, 4, 3, 3, 4}) → false	false	OK	    
+haveThree({1, 3, 1, 3, 1, 2}) → false	false	OK	    
+haveThree({1, 3, 1, 3, 1, 3}) → true	true	OK	    
+haveThree({1, 3, 3, 1, 3}) → false	false	OK	    
+haveThree({1, 3, 1, 3, 1, 3, 4, 3}) → false	false	OK	    
+haveThree({3, 4, 3, 4, 3, 4, 4}) → true	true	OK	    
+haveThree({3, 3, 3}) → false	false	OK	    
+haveThree({1, 3}) → false	false	OK	    
+haveThree({3}) → false	false	OK	    
+haveThree({1}) → false	false	OK	  
+
+21. twoTwo 
+
+Given an array of ints, return true if every 2 that appears in the array is next to another 2. 
+
+twoTwo({4, 2, 2, 3}) → true
+twoTwo({2, 2, 4}) → true
+twoTwo({2, 2, 4, 2}) → false
+
+public boolean twoTwo(int[] nums) 
+
+  for(int i = 0; i < nums.length; i++){
+    if (nums[i] == 2){
+      if (nums.length == 1){
+        return false;
+      }
+      else if (i == 0){
+        if (nums[i+1]!=2)
+          return false;
+      }
+      else if (i == nums.length-1){
+        if(nums[i-1]!=2)
+          return false;
+      }
+      else if (i > 0 && i < nums.length-1){
+        if(nums[i-1]!=2 && nums[i+1]!=2)
+          return false;
+      }
+    }
+  }
+  return true;
+
+22. sameEnds 
+
+Return true if the group of N numbers at the start and end of the array are the same. For example, with {5, 6, 45, 99, 13, 5, 6}, the ends are the same for n=0 and n=2, and false for n=1 and n=3. You may assume that n is in the range 0..nums.length inclusive. 
+
+sameEnds({5, 6, 45, 99, 13, 5, 6}, 1) → false
+sameEnds({5, 6, 45, 99, 13, 5, 6}, 2) → true
+sameEnds({5, 6, 45, 99, 13, 5, 6}, 3) → false
+
+public boolean sameEnds(int[] nums, int n) 
+
+  for(int i = 0; i < n; i++)
+    if (nums[i] != nums[nums.length-n+i])
+      return false;
+      
+  return true;
+
+Expected	Run		
+sameEnds({5, 6, 45, 99, 13, 5, 6}, 2) → true	true	OK	    
+sameEnds({5, 6, 45, 99, 13, 5, 6}, 3) → false	false	OK	    
+sameEnds({1, 2, 5, 2, 1}, 2) → false	false	OK	    
+sameEnds({1, 2, 5, 2, 1}, 5) → true	true	OK	    
+sameEnds({1, 1, 1}, 3) → true	true	OK	    
+sameEnds({1}, 1) → true	true	OK	    
+sameEnds({}, 0) → true	true	OK	    
+
+23. tripleUp
+
+Return true if the array contains, somewhere, three increasing adjacent numbers like .... 4, 5, 6, ... or 23, 24, 25. 
+
+tripleUp({1, 4, 5, 6, 2}) → true
+tripleUp({1, 2, 3}) → true
+tripleUp({1, 2, 4}) → false
+
+public boolean tripleUp(int[] nums) 
+
+  for(int i = 2; i < nums.length; i++)
+    if (nums[i]==nums[i-1]+1 && nums[i]==nums[i-2]+2)
+      return true;
+      
+  return false;
+
+Expected	Run		
+tripleUp({1, 4, 5, 6, 2}) → true	true	OK	    
+tripleUp({1, 2, 3}) → true	true	OK	    
+tripleUp({1, 2, 4}) → false	false	OK	    
+tripleUp({1, 2, 4, 5, 7, 6, 5, 6, 7, 6}) → true	true	OK	    
+tripleUp({1, 2}) → false	false	OK	    
+tripleUp({1}) → false	false	OK	    
+tripleUp({}) → false	false	OK	    
+tripleUp({10, 9, 8, -100, -99, -98, 100}) → true	true	OK	    
+tripleUp({10, 9, 8, -100, -99, 99, 100}) → false	false	OK	 
+
+24. fizzArray3 
+
+Given start and end numbers, return a new array containing the sequence of integers from start up to but not including end, so start=5 and end=10 yields {5, 6, 7, 8, 9}. The end number will be greater or equal to the start number. Note that a length-0 array is valid.
+
+fizzArray3(5, 10) → {5, 6, 7, 8, 9}
+fizzArray3(11, 18) → {11, 12, 13, 14, 15, 16, 17}
+fizzArray3(1, 3) → {1, 2}
+
+public int[] fizzArray3(int start, int end)
+
+  int[] result = new int[end-start];
+  
+  for(int i = start; i < end; i++)
+    result[i - start] = i;
+    
+  return result;
+
+Expected	Run		
+fizzArray3(5, 10) → {5, 6, 7, 8, 9}	{5, 6, 7, 8, 9}	OK	    
+fizzArray3(11, 18) → {11, 12, 13, 14, 15, 16, 17}	{11, 12, 13, 14, 15, 16, 17}	OK	    
+fizzArray3(1, 3) → {1, 2}	{1, 2}	OK	    
+fizzArray3(1, 2) → {1}	{1}	OK	    
+fizzArray3(1, 1) → {}	{}	OK	    
+
+25. shiftLeft 
+
+Return an array that is "left shifted" by one -- so {6, 2, 5, 3} returns {2, 5, 3, 6}. You may modify and return the given array, or return a new array. 
+
+shiftLeft({6, 2, 5, 3}) → {2, 5, 3, 6}
+shiftLeft({1, 2}) → {2, 1}
+shiftLeft({1}) → {1}
+
+public int[] shiftLeft(int[] nums)
+
+  if (nums.length == 0)
+    return nums;
+    
+  int[] result = new int[nums.length];
+
+  for(int i = 1; i < nums.length; i++)
+    result[i-1] = nums[i];
+
+  result[result.length-1] = nums[0];
+  return result;
+
+Expected	Run		
+shiftLeft({6, 2, 5, 3}) → {2, 5, 3, 6}	{2, 5, 3, 6}	OK	    
+shiftLeft({1, 2}) → {2, 1}	{2, 1}	OK	    
+shiftLeft({1}) → {1}	{1}	OK	    
+shiftLeft({}) → {}	{}	OK	    
+
+26. tenRun 
+
+For each multiple of 10 in the given array, change all the values following it to be that multiple of 10, until encountering another multiple of 10. So {2, 10, 3, 4, 20, 5} yields {2, 10, 10, 10, 20, 20}. 
+
+tenRun({2, 10, 3, 4, 20, 5}) → {2, 10, 10, 10, 20, 20}
+tenRun({10, 1, 20, 2}) → {10, 10, 20, 20}
+tenRun({10, 1, 9, 20}) → {10, 10, 10, 20}
+
+public int[] tenRun(int[] nums) 
+
+  boolean doReplace = false;
+  int replacement = 0;
+  
+  for(int i = 0; i < nums.length; i++){
+    if (nums[i]%10==0){
+      doReplace = true;
+      replacement = nums[i];
+    }
+    else if (doReplace)
+      nums[i] = replacement;
+  }
+  return nums;
+
+Expected	Run		
+tenRun({2, 10, 3, 4, 20, 5}) → {2, 10, 10, 10, 20, 20}	{2, 10, 10, 10, 20, 20}	OK	    
+tenRun({10, 1, 20, 2}) → {10, 10, 20, 20}	{10, 10, 20, 20}	OK	    
+tenRun({10, 1, 9, 20}) → {10, 10, 10, 20}	{10, 10, 10, 20}	OK	    
+tenRun({1, 2, 50, 1}) → {1, 2, 50, 50}	{1, 2, 50, 50}	OK	    
+tenRun({1, 20, 50, 1}) → {1, 20, 50, 50}	{1, 20, 50, 50}	OK	    
+tenRun({10, 10}) → {10, 10}	{10, 10}	OK	    
+tenRun({10, 2}) → {10, 10}	{10, 10}	OK	    
+tenRun({0, 2}) → {0, 0}	{0, 0}	OK	    
+tenRun({1, 2}) → {1, 2}	{1, 2}	OK	    
+tenRun({1}) → {1}	{1}	OK	    
+tenRun({}) → {}	{}	OK	    
+
+27. pre4 
+
+Given a non-empty array of ints, return a new array containing the elements from the original array that come before the first 4 in the original array. The original array will contain at least one 4. Note that it is valid in java to create an array of length 0. 
+
+pre4({1, 2, 4, 1}) → {1, 2}
+pre4({3, 1, 4}) → {3, 1}
+pre4({1, 4, 4}) → {1}
+
+public int[] pre4(int[] nums)
+
+  for(int i = 0; i < nums.length; i++){
+    if (nums[i]==4){
+      int[] result = new int[i];
+      for(int j = 0; j < result.length; j++)
+        result[j] = nums[j];
+      return result;
+    }
+  }
+  return nums;
+
+Expected	Run		
+pre4({1, 2, 4, 1}) → {1, 2}	{1, 2}	OK	    
+pre4({3, 1, 4}) → {3, 1}	{3, 1}	OK	    
+pre4({1, 4, 4}) → {1}	{1}	OK	    
+pre4({1, 4, 4, 2}) → {1}	{1}	OK	    
+pre4({1, 3, 4, 2, 4}) → {1, 3}	{1, 3}	OK	    
+pre4({4, 4}) → {}	{}	OK	    
+
+28. post4 
+
+Given a non-empty array of ints, return a new array containing the elements from the original array that come after the last 4 in the original array. The original array will contain at least one 4. Note that it is valid in java to create an array of length 0. 
+
+post4({2, 4, 1, 2}) → {1, 2}
+post4({4, 1, 4, 2}) → {2}
+post4({4, 4, 1, 2, 3}) → {1, 2, 3}
+
+public int[] post4(int[] nums)
+
+  for(int i = nums.length-1; i >= 0; i--)
+    if (nums[i]==4)
+      return makeArray(nums, i);
+      
+  return nums;
+}
+
+int[] makeArray(int[] nums, int max) {
+  int[] result = new int[nums.length-1-max];
+
+  for(int i = 0; i < result.length; i++)
+    result[i] = nums[max+1+i];
+    
+  return result;
+}
+
+Expected	Run		
+post4({2, 4, 1, 2}) → {1, 2}	{1, 2}	OK	    
+post4({4, 1, 4, 2}) → {2}	{2}	OK	    
+post4({4, 4, 1, 2, 3}) → {1, 2, 3}	{1, 2, 3}	OK	    
+post4({4, 2}) → {2}	{2}	OK	    
+post4({4, 4, 3}) → {3}	{3}	OK	    
+post4({4, 4}) → {}	{}	OK	    
+post4({4}) → {}	{}	OK	    
+post4({2, 4, 1, 4, 3, 2}) → {3, 2}	{3, 2}	OK	    
+post4({4, 1, 4, 2, 2, 2}) → {2, 2, 2}	{2, 2, 2}	OK	    
+post4({3, 4, 3, 2}) → {3, 2}	{3, 2}	OK	   
+
+29. notAlone 
+
+We'll say that an element in an array is "alone" if there are values before and after it, and those values are different from it. Return a version of the given array where every instance of the given value which is alone is replaced by whichever value to its left or right is larger. 
+
+notAlone({1, 2, 3}, 2) → {1, 3, 3}
+notAlone({1, 2, 3, 2, 5, 2}, 2) → {1, 3, 3, 5, 5, 2}
+notAlone({3, 4}, 3) → {3, 4}
+
+public int[] notAlone(int[] nums, int val)
+
+  for(int i = 1; i < nums.length - 1; i++)
+    if (nums[i] != nums[i-1] && 
+        nums[i] != nums[i+1] && 
+        nums[i-1] != nums[i+1])
+        nums[i] = Math.max(nums[i-1], nums[i+1]);
+        
+  return nums;
+
+Expected	Run		
+notAlone({1, 2, 3}, 2) → {1, 3, 3}	{1, 3, 3}	OK	    
+notAlone({1, 2, 3, 2, 5, 2}, 2) → {1, 3, 3, 5, 5, 2}	{1, 3, 3, 5, 5, 2}	OK	    
+notAlone({3, 4}, 3) → {3, 4}	{3, 4}	OK	    
+notAlone({3, 3}, 3) → {3, 3}	{3, 3}	OK	    
+notAlone({1, 3, 1, 2}, 1) → {1, 3, 3, 2}	{1, 3, 3, 2}	OK	    
+notAlone({3}, 3) → {3}	{3}	OK	    
+notAlone({}, 3) → {}	{}	OK	    
+notAlone({7, 1, 6}, 1) → {7, 7, 6}	{7, 7, 6}	OK	    
+notAlone({1, 1, 1}, 1) → {1, 1, 1}	{1, 1, 1}	OK	    
+
+30. zeroFront 
+
+Return an array that contains the exact same numbers as the given array, but rearranged so that all the zeros are grouped at the start of the array. The order of the non-zero numbers does not matter. So {1, 0, 0, 1} becomes {0 ,0, 1, 1}. You may modify and return the given array or make a new array. 
+
+zeroFront({1, 0, 0, 1}) → {0, 0, 1, 1}
+zeroFront({0, 1, 1, 0, 1}) → {0, 0, 1, 1, 1}
+zeroFront({1, 0}) → {0, 1}
+
+public int[] zeroFront(int[] nums)
+
+  int[] result = new int[nums.length];
+  int pos = result.length-1;
+  
+  for(int i = 0; i < nums.length; i++)
+    if (nums[i] != 0)
+      result[pos--] = nums[i];
+      
+  return result;
+
+Expected	Run		
+zeroFront({1, 0, 0, 1}) → {0, 0, 1, 1}	{0, 0, 1, 1}	OK	    
+zeroFront({0, 1, 1, 0, 1}) → {0, 0, 1, 1, 1}	{0, 0, 1, 1, 1}	OK	    
+zeroFront({1, 0}) → {0, 1}	{0, 1}	OK	    
+zeroFront({0, 1}) → {0, 1}	{0, 1}	OK	    
+zeroFront({1, 1, 1, 0}) → {0, 1, 1, 1}	{0, 1, 1, 1}	OK	    
+zeroFront({2, 2, 2, 2}) → {2, 2, 2, 2}	{2, 2, 2, 2}	OK	    
+zeroFront({0, 0, 1, 0}) → {0, 0, 0, 1}	{0, 0, 0, 1}	OK	    
+zeroFront({-1, 0, 0, -1, 0}) → {0, 0, 0, -1, -1}	{0, 0, 0, -1, -1}	OK	    
+zeroFront({0, -3, 0, -3}) → {0, 0, -3, -3}	{0, 0, -3, -3}	OK	    
+zeroFront({}) → {}	{}	OK	    
+
+31. withoutTen 
+
+Return a version of the given array where all the 10's have been removed. The remaining elements should shift left towards the start of the array as needed, and the empty spaces a the end of the array should be 0. So {1, 10, 10, 2} yields {1, 2, 0, 0}. You may modify and return the given array or make a new array. 
+
+withoutTen({1, 10, 10, 2}) → {1, 2, 0, 0}
+withoutTen({10, 2, 10}) → {2, 0, 0}
+withoutTen({1, 99, 10}) → {1, 99, 0}
+
+public int[] withoutTen(int[] nums)
+
+  int[] result = new int[nums.length];      
+  int pos = 0;
+  
+  for(int i = 0; i < nums.length; i++)
+    if (nums[i] != 10)
+      result[pos++] = nums[i];
+      
+   return result;
+
+Expected	Run		
+withoutTen({1, 10, 10, 2}) → {1, 2, 0, 0}	{1, 2, 0, 0}	OK	    
+withoutTen({10, 2, 10}) → {2, 0, 0}	{2, 0, 0}	OK	    
+withoutTen({1, 99, 10}) → {1, 99, 0}	{1, 99, 0}	OK	    
+withoutTen({10, 13, 10, 14}) → {13, 14, 0, 0}	{13, 14, 0, 0}	OK	    
+withoutTen({10, 13, 10, 14, 10}) → {13, 14, 0, 0, 0}	{13, 14, 0, 0, 0}	OK	    
+withoutTen({10, 10, 3}) → {3, 0, 0}	{3, 0, 0}	OK	    
+withoutTen({1}) → {1}	{1}	OK	    
+withoutTen({13, 1}) → {13, 1}	{13, 1}	OK	    
+withoutTen({10}) → {0}	{0}	OK	    
+withoutTen({}) → {}	{}	OK	    
+
+32. zeroMax 
+
+Return a version of the given array where each zero value in the array is replaced by the largest odd value to the right of the zero in the array. If there is no odd value to the right of the zero, leave the zero as a zero. 
+
+zeroMax({0, 5, 0, 3}) → {5, 5, 3, 3}
+zeroMax({0, 4, 0, 3}) → {3, 4, 3, 3}
+zeroMax({0, 1, 0}) → {1, 1, 0}
+
+public int[] zeroMax(int[] nums)
+
+  for(int i = 0; i < nums.length; i++){
+    if (nums[i] == 0){
+      int maxOdd = 0;
+      for(int j = i+1; j < nums.length; j++)
+        if (nums[j]%2==1 && nums[j] > maxOdd)
+          maxOdd = nums[j];
+      
+      nums[i] = maxOdd;
+     }
+  }
+  return nums;
+
+Expected	Run		
+zeroMax({0, 5, 0, 3}) → {5, 5, 3, 3}	{5, 5, 3, 3}	OK	    
+zeroMax({0, 4, 0, 3}) → {3, 4, 3, 3}	{3, 4, 3, 3}	OK	    
+zeroMax({0, 1, 0}) → {1, 1, 0}	{1, 1, 0}	OK	    
+zeroMax({0, 1, 5}) → {5, 1, 5}	{5, 1, 5}	OK	    
+zeroMax({0, 2, 0}) → {0, 2, 0}	{0, 2, 0}	OK	    
+zeroMax({1}) → {1}	{1}	OK	    
+zeroMax({0}) → {0}	{0}	OK	    
+zeroMax({}) → {}	{}	OK	   
+
+33. evenOdd
+
+Return an array that contains the exact same numbers as the given array, but rearranged so that all the even numbers come before all the odd numbers. Other than that, the numbers can be in any order. You may modify and return the given array, or make a new array. 
+
+evenOdd({1, 0, 1, 0, 0, 1, 1}) → {0, 0, 0, 1, 1, 1, 1}
+evenOdd({3, 3, 2}) → {2, 3, 3}
+evenOdd({2, 2, 2}) → {2, 2, 2}
+
+public int[] evenOdd(int[] nums)
+
+  int[] result = new int[nums.length];
+  int evenpos = 0;
+  int oddpos = result.length-1;
+  
+  for(int n : nums)
+    if (n%2==0)
+      result[evenpos++] = n;
+    else
+      result[oddpos--] = n;
+      
+   return result;
+
+Expected	Run		
+evenOdd({1, 0, 1, 0, 0, 1, 1}) → {0, 0, 0, 1, 1, 1, 1}	{0, 0, 0, 1, 1, 1, 1}	OK	    
+evenOdd({3, 3, 2}) → {2, 3, 3}	{2, 3, 3}	OK	    
+evenOdd({2, 2, 2}) → {2, 2, 2}	{2, 2, 2}	OK	    
+evenOdd({3, 2, 2}) → {2, 2, 3}	{2, 2, 3}	OK	    
+evenOdd({1, 1, 0, 1, 0}) → {0, 0, 1, 1, 1}	{0, 0, 1, 1, 1}	OK	    
+evenOdd({1}) → {1}	{1}	OK	    
+evenOdd({1, 2}) → {2, 1}	{2, 1}	OK	    
+evenOdd({2, 1}) → {2, 1}	{2, 1}	OK	    
+evenOdd({}) → {}	{}	OK	   
+
+34. fizzBuzz 
+
+This is slightly more difficult version of the famous FizzBuzz problem which is sometimes given as a first problem for job interviews. (See also: FizzBuzz Code.) Consider the series of numbers beginning at start and running up to but not including end, so for example start=1 and end=5 gives the series 1, 2, 3, 4. Return a new String[] array containing the string form of these numbers, except for multiples of 3, use "Fizz" instead of the number, for multiples of 5 use "Buzz", and for multiples of both 3 and 5 use "FizzBuzz".
+
+fizzBuzz(1, 6) → {"1", "2", "Fizz", "4", "Buzz"}
+fizzBuzz(1, 8) → {"1", "2", "Fizz", "4", "Buzz", "Fizz", "7"}
+fizzBuzz(1, 11) → {"1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz"}
+
+public String[] fizzBuzz(int start, int end)
+
+  String[] result = new String[end-start];
+  
+  for(int i = start; i < end; i++){
+    if (i%3==0 && i%5==0)
+      result[i-start] = "FizzBuzz";
+    else if (i%3==0)
+      result[i-start] = "Fizz";
+    else if (i%5==0)
+      result[i-start] = "Buzz";
+    else
+      result[i-start] = String.valueOf(i);
+  }  
+  return result;
+
+Expected	Run		
+fizzBuzz(1, 6) → {"1", "2", "Fizz", "4", "Buzz"}	{"1", "2", "Fizz", "4", "Buzz"}	OK	    
+fizzBuzz(1, 8) → {"1", "2", "Fizz", "4", "Buzz", "Fizz", "7"}	{"1", "2", "Fizz", "4", "Buzz", "Fizz", "7"}	OK	    
+fizzBuzz(1, 11) → {"1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz"}	{"1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz"}	OK	    
+fizzBuzz(1, 16) → {"1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz"}	{"1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz"}	OK	    
+fizzBuzz(1, 4) → {"1", "2", "Fizz"}	{"1", "2", "Fizz"}	OK	    
+fizzBuzz(1, 2) → {"1"}	{"1"}	OK	    
+

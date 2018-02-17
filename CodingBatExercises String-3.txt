@@ -1,0 +1,383 @@
+﻿CODING.BAT EXERCISES
+
+Java
+
+String-3
+
+1. countYZ 
+
+Given a string, count the number of words ending in 'y' or 'z' -- so the 'y' in "heavy" and the 'z' in "fez" count, but not the 'y' in "yellow" (not case sensitive). We'll say that a y or z is at the end of a word if there is not an alphabetic letter immediately following it. (Note: Character.isLetter(char) tests if a char is an alphabetic letter.) 
+
+countYZ("fez day") → 2
+countYZ("day fez") → 2
+countYZ("day fyyyz") → 2
+
+  String low = str.toLowerCase();
+  int count = 0;
+  
+  for(int i = 0; i < low.length(); i++)
+    if (low.charAt(i) == 'y' || low.charAt(i) == 'z')
+      if (i == low.length()-1 || !Character.isLetter(low.charAt(i+1)))
+        count++;
+  
+  return count;
+
+Expected	Run		
+countYZ("fez day") → 2	2	OK	    
+countYZ("day fez") → 2	2	OK	    
+countYZ("day fyyyz") → 2	2	OK	    
+countYZ("day yak") → 1	1	OK	    
+countYZ("day:yak") → 1	1	OK	    
+countYZ("!!day--yaz!!") → 2	2	OK	    
+countYZ("yak zak") → 0	0	OK	    
+countYZ("DAY abc XYZ") → 2	2	OK	    
+countYZ("aaz yyz my") → 3	3	OK	    
+countYZ("y2bz") → 2	2	OK	    
+countYZ("zxyx") → 0	0	OK	   
+
+2. withoutString 
+
+Given two strings, base and remove, return a version of the base string where all instances of the remove string have been removed (not case sensitive). You may assume that the remove string is length 1 or more. Remove only non-overlapping instances, so with "xxx" removing "xx" leaves "x". 
+
+withoutString("Hello there", "llo") → "He there"
+withoutString("Hello there", "e") → "Hllo thr"
+withoutString("Hello there", "x") → "Hello there"
+
+public String withoutString(String base, String remove)
+
+  Stack<Integer> stack = new Stack<Integer>();
+  String lowerbase = base.toLowerCase();
+  String lowerremove = remove.toLowerCase();
+  int pos = lowerbase.indexOf(lowerremove);
+  int run = lowerremove.length();
+  
+  while (pos != -1){
+    stack.push(pos);
+    pos = lowerbase.indexOf(lowerremove, pos + run);
+  }
+  
+  StringBuilder sb = new StringBuilder(base);
+  
+  while (!stack.empty()) {
+    pos = stack.pop();
+    sb.delete(pos, pos + run);
+  }
+  
+  return sb.toString();
+
+Expected	Run		
+withoutString("Hello there", "llo") → "He there"	"He there"	OK	    
+withoutString("Hello there", "e") → "Hllo thr"	"Hllo thr"	OK	    
+withoutString("Hello there", "x") → "Hello there"	"Hello there"	OK	    
+withoutString("This is a FISH", "IS") → "Th a FH"	"Th a FH"	OK	    
+withoutString("THIS is a FISH", "is") → "TH a FH"	"TH a FH"	OK	    
+withoutString("THIS is a FISH", "iS") → "TH a FH"	"TH a FH"	OK	    
+withoutString("abxxxxab", "xx") → "abab"	"abab"	OK	    
+withoutString("abxxxab", "xx") → "abxab"	"abxab"	OK	    
+withoutString("abxxxab", "x") → "abab"	"abab"	OK	    
+withoutString("xxx", "x") → ""	""	OK	    
+withoutString("xxx", "xx") → "x"	"x"	OK	    
+withoutString("xyzzy", "Y") → "xzz"	"xzz"	OK	    
+withoutString("", "x") → ""	""	OK	    
+withoutString("abcabc", "b") → "acac"	"acac"	OK	    
+withoutString("AA22bb", "2") → "AAbb"	"AAbb"	OK	    
+withoutString("1111", "1") → ""	""	OK	    
+withoutString("1111", "11") → ""	""	OK	    
+withoutString("MkjtMkx", "Mk") → "jtx"	"jtx"	OK	    
+withoutString("Hi HoHo", "Ho") → "Hi "	"Hi "	OK	  
+
+3. equalIsNot 
+
+Given a string, return true if the number of appearances of "is" anywhere in the string is equal to the number of appearances of "not" anywhere in the string (case sensitive). 
+
+equalIsNot("This is not") → false
+equalIsNot("This is notnot") → true
+equalIsNot("noisxxnotyynotxisi") → true
+
+  int count_is  = 0;
+  int idx = str.indexOf("is");
+  while (idx != -1){
+    count_is++;
+    idx = str.indexOf("is", idx+"is".length());
+  }
+
+  int count_not = 0;
+  idx = str.indexOf("not");   
+  while (idx != -1){
+    count_not++;
+    idx = str.indexOf("not", idx+"not".length());
+  }
+  
+  return count_is == count_not;
+
+Expected	Run		
+equalIsNot("This is not") → false	false	OK	    
+equalIsNot("This is notnot") → true	true	OK	    
+equalIsNot("noisxxnotyynotxisi") → true	true	OK	    
+equalIsNot("noisxxnotyynotxsi") → false	false	OK	    
+equalIsNot("xxxyyyzzzintint") → true	true	OK	    
+equalIsNot("") → true	true	OK	    
+equalIsNot("isisnotnot") → true	true	OK	    
+equalIsNot("isisnotno7Not") → false	false	OK	    
+equalIsNot("isnotis") → false	false	OK	    
+equalIsNot("mis3notpotbotis") → false	false	OK	    
+
+4. gHappy 
+
+We'll say that a lowercase 'g' in a string is "happy" if there is another 'g' immediately to its left or right. Return true if all the g's in the given string are happy. 
+
+gHappy("xxggxx") → true
+gHappy("xxgxx") → false
+gHappy("xxggyygxx") → false
+
+  for(int i = 0; i < str.length(); i++)
+    if (str.charAt(i)=='g' && !gNear(str, i))
+        return false;
+        
+  return true;
+}
+
+boolean gNear(String s, int pos){
+  if (pos > 0 && s.charAt(pos-1)=='g')
+      return true;
+      
+  if (pos < s.length()-1 && s.charAt(pos+1)=='g')
+      return true;
+      
+  return false;
+}
+
+Expected	Run		
+gHappy("xxggxx") → true	true	OK	    
+gHappy("xxgxx") → false	false	OK	    
+gHappy("xxggyygxx") → false	false	OK	    
+gHappy("g") → false	false	OK	    
+gHappy("gg") → true	true	OK	    
+gHappy("") → true	true	OK	    
+gHappy("xxgggxyz") → true	true	OK	    
+gHappy("xxgggxyg") → false	false	OK	   
+
+5. countTriple 
+
+We'll say that a "triple" in a string is a char appearing three times in a row. Return the number of triples in the given string. The triples may overlap. 
+
+countTriple("abcXXXabc") → 1
+countTriple("xxxabyyyycd") → 3
+countTriple("a") → 0
+
+public int countTriple(String str)
+
+  int count = 0;
+  
+  for(int i = 2; i < str.length(); i++)
+    if (str.charAt(i)==str.charAt(i-1) && str.charAt(i)==str.charAt(i-2))
+      count++;
+  
+  return count;
+}
+
+Expected	Run		
+countTriple("abcXXXabc") → 1	1	OK	    
+countTriple("xxxabyyyycd") → 3	3	OK	    
+countTriple("a") → 0	0	OK	    
+countTriple("") → 0	0	OK	    
+countTriple("XXXabc") → 1	1	OK	    
+countTriple("XXXXabc") → 2	2	OK	    
+countTriple("XXXXXabc") → 3	3	OK	    
+
+6. sumDigits 
+
+Given a string, return the sum of the digits 0-9 that appear in the string, ignoring all other characters. Return 0 if there are no digits in the string.
+
+sumDigits("aa1bc2d3") → 6
+sumDigits("aa11b33") → 8
+sumDigits("Chocolate") → 0
+
+public int sumDigits(String str)
+
+  int sum = 0;
+  
+  for(int i = 0; i < str.length(); i++)
+    if (Character.isDigit(str.charAt(i)))
+      sum += Integer.parseInt(str.substring(i,i+1));
+  
+  return sum;
+
+Expected	Run		
+sumDigits("aa1bc2d3") → 6	6	OK	    
+sumDigits("aa11b33") → 8	8	OK	    
+sumDigits("Chocolate") → 0	0	OK	    
+sumDigits("5hoco1a1e") → 7	7	OK	    
+sumDigits("123abc123") → 12	12	OK	    
+sumDigits("") → 0	0	OK	    
+
+7. sameEnds
+
+Given a string, return the longest substring that appears at both the beginning and end of the string without overlapping. For example, sameEnds("abXab") is "ab". 
+
+sameEnds("abXYab") → "ab"
+sameEnds("xx") → "x"
+sameEnds("xxx") → "x"
+
+  int len = str.length();
+ 
+  if (str.length() > 1)
+    for(int i = len/2; i >= 0; i--)
+      if (str.substring(0,i).equals(str.substring(len-i)))
+        return str.substring(0,i);
+  
+  return "";
+
+Expected	Run		
+sameEnds("abXYab") → "ab"	"ab"	OK	    
+sameEnds("xx") → "x"	"x"	OK	    
+sameEnds("xxx") → "x"	"x"	OK	    
+sameEnds("xxxx") → "xx"	"xx"	OK	    
+sameEnds("javaXYZjava") → "java"	"java"	OK	    
+sameEnds("javajava") → "java"	"java"	OK	    
+sameEnds("xavaXYZjava") → ""	""	OK	    
+sameEnds("Hello! and Hello!") → "Hello!"	"Hello!"	OK	    
+sameEnds("x") → ""	""	OK	    
+sameEnds("") → ""	""	OK	    
+sameEnds("abcb") → ""	""	OK	    
+sameEnds("mymmy") → "my"	"my"	OK	   
+
+8. mirrorEnds 
+
+Given a string, look for a mirror image (backwards) string at both the beginning and end of the given string. In other words, zero or more characters at the very begining of the given string, and at the very end of the string in reverse order (possibly overlapping). For example, the string "abXYZba" has the mirror end "ab". 
+
+mirrorEnds("abXYZba") → "ab"
+mirrorEnds("abca") → "a"
+mirrorEnds("aba") → "aba"
+
+public String mirrorEnds(String string)
+
+  int len = str.length();
+  int idx = 0;
+
+  while (idx < len && str.charAt(idx)==str.charAt(len-1-idx)){
+    idx++;
+  }
+  
+  return str.substring(0, idx);
+
+Expected	Run		
+mirrorEnds("abXYZba") → "ab"	"ab"	OK	    
+mirrorEnds("abca") → "a"	"a"	OK	    
+mirrorEnds("aba") → "aba"	"aba"	OK	    
+mirrorEnds("abab") → ""	""	OK	    
+mirrorEnds("xxx") → "xxx"	"xxx"	OK	    
+mirrorEnds("xxYxx") → "xxYxx"	"xxYxx"	OK	    
+mirrorEnds("Hi and iH") → "Hi "	"Hi "	OK	    
+mirrorEnds("x") → "x"	"x"	OK	    
+mirrorEnds("") → ""	""	OK	   
+
+9. maxBlock 
+
+Given a string, return the length of the largest "block" in the string. A block is a run of adjacent chars that are the same. 
+
+maxBlock("hoopla") → 2
+maxBlock("abbCCCddBBBxx") → 3
+maxBlock("") → 0
+
+public int maxBlock(String str)
+
+  int max = Math.min(1, str.length());
+  int run = Math.min(1, str.length());
+  
+  for(int i = 1; i < str.length(); i++){
+    if (str.charAt(i)!=str.charAt(i-1)){
+      run = 1;
+    }else{
+      run++;
+      if (run > max)
+        max = run;
+    }
+  }
+  
+  return max;
+
+Expected	Run		
+maxBlock("hoopla") → 2	2	OK	    
+maxBlock("abbCCCddBBBxx") → 3	3	OK	    
+maxBlock("") → 0	0	OK	    
+maxBlock("xyz") → 1	1	OK	    
+maxBlock("xxyz") → 2	2	OK	    
+maxBlock("xyzz") → 2	2	OK	    
+maxBlock("abbbcbbbxbbbx") → 3	3	OK	    
+maxBlock("XXBBBbbxx") → 3	3	OK	    
+maxBlock("XXBBBBbbxx") → 4	4	OK	  
+
+10. sumNumbers 
+
+Given a string, return the sum of the numbers appearing in the string, ignoring all other characters. A number is a series of 1 or more digit chars in a row. (Note: Character.isDigit(char) tests if a char is one of the chars '0', '1', .. '9'. Integer.parseInt(string) converts a string to an int.) 
+
+sumNumbers("abc123xyz") → 123
+sumNumbers("aa11b33") → 44
+sumNumbers("7 11") → 18
+
+public int sumNumbers(String str)
+
+  int rank = 0;
+  int sum = 0;
+  
+  for(int i = str.length()-1; i >= 0; i--)
+    if (Character.isDigit(str.charAt(i)))
+      sum += Math.pow(10, rank++) * Integer.parseInt(str.substring(i,i+1));
+    else
+      rank = 0;
+      
+  return sum;
+
+Expected	Run		
+sumNumbers("abc123xyz") → 123	123	OK	    
+sumNumbers("aa11b33") → 44	44	OK	    
+sumNumbers("7 11") → 18	18	OK	    
+sumNumbers("Chocolate") → 0	0	OK	    
+sumNumbers("5hoco1a1e") → 7	7	OK	    
+sumNumbers("5$$1;;1!!") → 7	7	OK	    
+sumNumbers("a1234bb11") → 1245	1245	OK	    
+sumNumbers("") → 0	0	OK	    
+sumNumbers("a22bbb3") → 25	25	OK	    
+
+11. notReplace 
+
+Given a string, return a string where every appearance of the lowercase word "is" has been replaced with "is not". The word "is" should not be immediately preceeded or followed by a letter -- so for example the "is" in "this" does not count.
+
+notReplace("is test") → "is not test"
+notReplace("is-is") → "is not-is not"
+notReplace("This is right") → "This is not right"
+
+public String notReplace(String str)
+
+  StringBuilder sb = new StringBuilder();
+  boolean isOk, frontOk, backOk;
+    
+  for(int i = 0; i < str.length(); i++){
+    isOk = i >= str.length() - 1 || str.substring(i, i+2).equals("is");
+    frontOk = i == 0 || !Character.isLetter(str.charAt(i-1));
+    backOk = i >= str.length() - 2 || !Character.isLetter(str.charAt(i+2));    
+    
+    if (isOk && frontOk && backOk){
+      sb.append("is not");
+      i++;
+    }
+    else
+      sb.append(str.charAt(i));
+  }
+  
+  return sb.toString();
+
+Expected	Run		
+notReplace("is test") → "is not test"	"is not test"	OK	    
+notReplace("is-is") → "is not-is not"	"is not-is not"	OK	    
+notReplace("This is right") → "This is not right"	"This is not right"	OK	    
+notReplace("This is isabell") → "This is not isabell"	"This is not isabell"	OK	    
+notReplace("") → ""	""	OK	    
+notReplace("is") → "is not"	"is not"	OK	    
+notReplace("isis") → "isis"	"isis"	OK	    
+notReplace("Dis is bliss is") → "Dis is not bliss is not"	"Dis is not bliss is not"	OK	    
+notReplace("is his") → "is not his"	"is not his"	OK	    
+notReplace("xis yis") → "xis yis"	"xis yis"	OK	    
+notReplace("AAAis is") → "AAAis is not"	"AAAis is not"	OK	   
+

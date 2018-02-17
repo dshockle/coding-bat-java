@@ -1,0 +1,502 @@
+﻿CODING.BAT EXERCISES
+
+Java
+
+Warmup-2
+
+1. stringTimes 
+
+Given a string and a non-negative int n, return a larger string that is n copies of the original string. 
+
+stringTimes("Hi", 2) → "HiHi"
+stringTimes("Hi", 3) → "HiHiHi"
+stringTimes("Hi", 1) → "Hi"
+
+public String stringTimes(String str, int n)
+
+  StringBuilder sb = new StringBuilder();
+  for(int i = 0; i < n; i++)
+    sb.append(str);
+  return sb.toString();
+}
+
+Expected	Run		
+stringTimes("Hi", 2) → "HiHi"	"HiHi"	OK	    
+stringTimes("Hi", 3) → "HiHiHi"	"HiHiHi"	OK	    
+stringTimes("Hi", 1) → "Hi"	"Hi"	OK	    
+stringTimes("Hi", 0) → ""	""	OK	    
+stringTimes("Hi", 5) → "HiHiHiHiHi"	"HiHiHiHiHi"	OK	    
+stringTimes("Oh Boy!", 2) → "Oh Boy!Oh Boy!"	"Oh Boy!Oh Boy!"	OK	    
+stringTimes("x", 4) → "xxxx"	"xxxx"	OK	    
+stringTimes("", 4) → ""	""	OK	    
+stringTimes("code", 2) → "codecode"	"codecode"	OK	    
+stringTimes("code", 3) → "codecodecode"	"codecodecode"	
+
+2. frontTimes 
+
+Given a string and a non-negative int n, we'll say that the front of the string is the first 3 chars, or whatever is there if the string is less than length 3. Return n copies of the front; 
+
+frontTimes("Chocolate", 2) → "ChoCho"
+frontTimes("Chocolate", 3) → "ChoChoCho"
+frontTimes("Abc", 3) → "AbcAbcAbc"
+
+public String frontTimes(String str, int n) 
+
+  StringBuilder sb = new StringBuilder();
+  
+  for(int i = 0; i < n; i++)
+    sb.append(str.substring(0, Math.min(3, str.length())));
+    
+  return sb.toString();
+
+Expected	Run		
+frontTimes("Chocolate", 2) → "ChoCho"	"ChoCho"	OK	    
+frontTimes("Chocolate", 3) → "ChoChoCho"	"ChoChoCho"	OK	    
+frontTimes("Abc", 3) → "AbcAbcAbc"	"AbcAbcAbc"	OK	    
+frontTimes("Ab", 4) → "AbAbAbAb"	"AbAbAbAb"	OK	    
+frontTimes("A", 4) → "AAAA"	"AAAA"	OK	    
+frontTimes("", 4) → ""	""	OK	    
+frontTimes("Abc", 0) → ""	""	OK
+
+3. countXX 
+
+Count the number of "xx" in the given string. We'll say that overlapping is allowed, so "xxx" contains 2 "xx". 
+
+countXX("abcxx") → 1
+countXX("xxx") → 2
+countXX("xxxx") → 3
+
+int countXX(String str)
+
+  int count = 0;
+  
+  for(int i = 1; i < str.length(); i++)
+    if (str.charAt(i)=='x' && str.charAt(i-1)=='x')
+      count++;
+      
+  return count;
+
+Expected	Run		
+countXX("abcxx") → 1	1	OK	    
+countXX("xxx") → 2	2	OK	    
+countXX("xxxx") → 3	3	OK	    
+countXX("abc") → 0	0	OK	    
+countXX("Hello there") → 0	0	OK	    
+countXX("Hexxo thxxe") → 2	2	OK	    
+countXX("") → 0	0	OK	    
+countXX("Kittens") → 0	0	OK	    
+countXX("Kittensxxx") → 2	2	OK	  
+
+4. doubleX 
+
+Given a string, return true if the first instance of "x" in the string is immediately followed by another "x". 
+
+doubleX("axxbb") → true
+doubleX("axaxax") → false
+doubleX("xxxxx") → true
+
+boolean doubleX(String str) 
+
+  int idx = str.indexOf('x');
+  
+  if (idx == -1 || idx == str.length()-1)
+    return false;
+  else if (str.indexOf('x', idx+1) == idx+1)
+    return true;
+  else
+    return false;
+
+Expected	Run		
+doubleX("axxbb") → true	true	OK	    
+doubleX("axaxax") → false	false	OK	    
+doubleX("xxxxx") → true	true	OK	    
+doubleX("xaxxx") → false	false	OK	    
+doubleX("aaaax") → false	false	OK	    
+doubleX("") → false	false	OK	    
+doubleX("abc") → false	false	OK	    
+doubleX("x") → false	false	OK	    
+doubleX("xx") → true	true	OK	    
+doubleX("xax") → false	false	OK	    
+doubleX("xaxx") → false	false	OK
+
+5. stringBits 
+
+Given a string, return a new string made of every other char starting with the first, so "Hello" yields "Hlo". 
+
+stringBits("Hello") → "Hlo"
+stringBits("Hi") → "H"
+stringBits("Heeololeo") → "Hello"
+
+public String stringBits(String str) 
+
+  StringBuilder sb = new StringBuilder();
+  
+  for(int i = 0; i < str.length(); i += 2)
+    sb.append(str.charAt(i));
+    
+  return sb.toString();
+
+Expected	Run		
+stringBits("Hello") → "Hlo"	"Hlo"	OK	    
+stringBits("Hi") → "H"	"H"	OK	    
+stringBits("Heeololeo") → "Hello"	"Hello"	OK	    
+stringBits("HiHiHi") → "HHH"	"HHH"	OK	    
+stringBits("") → ""	""	OK	    
+stringBits("Greetings") → "Getns"	"Getns"	OK	    
+stringBits("Chocoate") → "Coot"	"Coot"	OK	    
+stringBits("pi") → "p"	"p"	OK	    
+stringBits("Hello Kitten") → "HloKte"	"HloKte"	OK	    
+stringBits("hxaxpxpxy") → "happy"	"happy"	OK	 
+
+6. stringSplosion 
+
+Given a non-empty string like "Code" return a string like "CCoCodCode". 
+
+stringSplosion("Code") → "CCoCodCode"
+stringSplosion("abc") → "aababc"
+stringSplosion("ab") → "aab"
+
+  StringBuilder sb = new StringBuilder();
+  
+  for(int i = 0; i < str.length(); i++)
+    sb.append(str.substring(0, i+1));
+    
+  return sb.toString();
+
+Expected	Run		
+stringSplosion("Code") → "CCoCodCode"	"CCoCodCode"	OK	    
+stringSplosion("abc") → "aababc"	"aababc"	OK	    
+stringSplosion("ab") → "aab"	"aab"	OK	    
+stringSplosion("x") → "x"	"x"	OK	    
+stringSplosion("fade") → "ffafadfade"	"ffafadfade"	OK	    
+stringSplosion("There") → "TThTheTherThere"	"TThTheTherThere"	OK	    
+stringSplosion("Kitten") → "KKiKitKittKitteKitten"	"KKiKitKittKitteKitten"	OK	    
+stringSplosion("Bye") → "BByBye"	"BByBye"	OK	    
+stringSplosion("Good") → "GGoGooGood"	"GGoGooGood"	OK	    
+stringSplosion("Bad") → "BBaBad"	"BBaBad"	OK	   
+
+7. last2
+
+Given a string, return the count of the number of times that a substring length 2 appears in the string and also as the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring). 
+
+last2("hixxhi") → 1
+last2("xaxxaxaxx") → 1
+last2("axxxaaxx") → 2
+
+  if (str.length() < 3)
+    return 0;
+    
+  String end = str.substring(str.length()-2);
+  int count = 0;
+  
+  for (int i = 0; i < str.length()-2; i++)
+    if (str.substring(i, i+2).equals(end))
+      count++;
+  
+  return count;
+
+Expected	Run		
+last2("hixxhi") → 1	1	OK	    
+last2("xaxxaxaxx") → 1	1	OK	    
+last2("axxxaaxx") → 2	2	OK	    
+last2("xxaxxaxxaxx") → 3	3	OK	    
+last2("xaxaxaxx") → 0	0	OK	    
+last2("xxxx") → 2	2	OK	    
+last2("13121312") → 1	1	OK	    
+last2("11212") → 1	1	OK	    
+last2("13121311") → 0	0	OK	    
+last2("1717171") → 2	2	OK	    
+last2("hi") → 0	0	OK	    
+last2("h") → 0	0	OK	    
+last2("") → 0	0	OK	    
+
+8. arrayCount9 
+
+Given an array of ints, return the number of 9's in the array. 
+
+arrayCount9({1, 2, 9}) → 1
+arrayCount9({1, 9, 9}) → 2
+arrayCount9({1, 9, 9, 3, 9}) → 3
+
+public int arrayCount9(int[] nums) 
+
+  int count = 0;
+  
+  for(int n : nums)
+    if (n == 9)
+      count++;
+  
+  return count;
+
+Expected	Run		
+arrayCount9({1, 2, 9}) → 1	1	OK	    
+arrayCount9({1, 9, 9}) → 2	2	OK	    
+arrayCount9({1, 9, 9, 3, 9}) → 3	3	OK	    
+arrayCount9({1, 2, 3}) → 0	0	OK	    
+arrayCount9({}) → 0	0	OK	    
+arrayCount9({4, 2, 4, 3, 1}) → 0	0	OK	    
+arrayCount9({9, 2, 4, 3, 1}) → 1	1	OK
+
+9. arrayFront9 
+
+Given an array of ints, return true if one of the first 4 elements in the array is a 9. The array length may be less than 4. 
+
+arrayFront9({1, 2, 9, 3, 4}) → true
+arrayFront9({1, 2, 3, 4, 9}) → false
+arrayFront9({1, 2, 3, 4, 5}) → false
+
+public boolean arrayFront9(int[] nums) 
+
+  for(int i = 0; i < Math.min(nums.length, 4); i++)
+    if (nums[i]==9)
+      return true;
+      
+  return false;
+
+Expected	Run		
+arrayFront9({1, 2, 9, 3, 4}) → true	true	OK	    
+arrayFront9({1, 2, 3, 4, 9}) → false	false	OK	    
+arrayFront9({1, 2, 3, 4, 5}) → false	false	OK	    
+arrayFront9({9, 2, 3}) → true	true	OK	    
+arrayFront9({1, 9, 9}) → true	true	OK	    
+arrayFront9({1, 2, 3}) → false	false	OK	    
+arrayFront9({1, 9}) → true	true	OK	    
+arrayFront9({5, 5}) → false	false	OK	    
+arrayFront9({2}) → false	false	OK	    
+arrayFront9({9}) → true	true	OK	    
+arrayFront9({}) → false	false	OK	    
+arrayFront9({3, 9, 2, 3, 3}) → true	true	OK	
+
+10. array123 
+
+Given an array of ints, return true if .. 1, 2, 3, .. appears in the array somewhere. 
+
+array123({1, 1, 2, 3, 1}) → true
+array123({1, 1, 2, 4, 1}) → false
+array123({1, 1, 2, 1, 2, 3}) → true
+
+public boolean array123(int[] nums)
+
+  int previous = 0;
+  
+  for(int n : nums)
+    if (n==1 || (n==2 && previous == 1))
+      previous = n;
+    else if (n==3 && previous == 2)
+      return true;
+    else
+      previous = 0;
+      
+  return false;
+
+Expected	Run		
+array123({1, 1, 2, 3, 1}) → true	true	OK	    
+array123({1, 1, 2, 4, 1}) → false	false	OK	    
+array123({1, 1, 2, 1, 2, 3}) → true	true	OK	    
+array123({1, 1, 2, 1, 2, 1}) → false	false	OK	    
+array123({1, 2, 3, 1, 2, 3}) → true	true	OK	    
+array123({1, 2, 3}) → true	true	OK	    
+array123({1, 1, 1}) → false	false	OK	    
+array123({1, 2}) → false	false	OK	    
+array123({1}) → false	false	OK	    
+array123({}) → false	false	OK	    
+
+11. stringMatch
+
+Given 2 strings, a and b, return the number of the positions where they contain the same length 2 substring. So "xxcaazz" and "xxbaaz" yields 3, since the "xx", "aa", and "az" substrings appear in the same place in both strings. 
+
+stringMatch("xxcaazz", "xxbaaz") → 3
+stringMatch("abc", "abc") → 2
+stringMatch("abc", "axc") → 0
+
+public int stringMatch(String a, String b)
+
+  int count = 0;
+  
+  for(int i = 1; i < Math.min(a.length(), b.length()); i++)
+    if (a.charAt(i)==b.charAt(i) && a.charAt(i-1)==b.charAt(i-1))
+      count++;
+      
+  return count;
+
+Expected	Run		
+stringMatch("xxcaazz", "xxbaaz") → 3	3	OK	    
+stringMatch("abc", "abc") → 2	2	OK	    
+stringMatch("abc", "axc") → 0	0	OK	    
+stringMatch("hello", "he") → 1	1	OK	    
+stringMatch("he", "hello") → 1	1	OK	    
+stringMatch("h", "hello") → 0	0	OK	    
+stringMatch("", "hello") → 0	0	OK	    
+stringMatch("aabbccdd", "abbbxxd") → 1	1	OK	    
+stringMatch("aaxxaaxx", "iaxxai") → 3	3	OK	    
+stringMatch("iaxxai", "aaxxaaxx") → 3	3	OK
+
+12. stringX 
+
+Given a string, return a version where all the "x" have been removed. Except an "x" at the very start or end should not be removed. 
+
+stringX("xxHxix") → "xHix"
+stringX("abxxxcd") → "abcd"
+stringX("xabxxxcdx") → "xabcdx"
+
+  if (str.length() < 3)
+    return str;
+  else
+    return str.substring(0,1) +
+           str.substring(1, str.length()-1).replace("x","") +
+           str.substring(str.length()-1);
+
+Expected	Run		
+stringX("xxHxix") → "xHix"	"xHix"	OK	    
+stringX("abxxxcd") → "abcd"	"abcd"	OK	    
+stringX("xabxxxcdx") → "xabcdx"	"xabcdx"	OK	    
+stringX("xKittenx") → "xKittenx"	"xKittenx"	OK	    
+stringX("Hello") → "Hello"	"Hello"	OK	    
+stringX("xx") → "xx"	"xx"	OK	    
+stringX("x") → "x"	"x"	OK	    
+stringX("") → ""	""	OK	
+
+13. altPairs 
+
+Given a string, return a string made of the chars at indexes 0,1, 4,5, 8,9 ... so "kittens" yields "kien". 
+
+altPairs("kitten") → "kien"
+altPairs("Chocolate") → "Chole"
+altPairs("CodingHorror") → "Congrr"
+
+public String altPairs(String str)
+
+  StringBuilder sb = new StringBuilder();
+  
+  for(int i = 0; i < str.length(); i += 4){
+    sb.append(str.charAt(i));
+    if (i < str.length()-1)
+      sb.append(str.charAt(i+1));
+  }
+  return sb.toString();
+
+Expected	Run		
+altPairs("kitten") → "kien"	"kien"	OK	    
+altPairs("Chocolate") → "Chole"	"Chole"	OK	    
+altPairs("CodingHorror") → "Congrr"	"Congrr"	OK	    
+altPairs("yak") → "ya"	"ya"	OK	    
+altPairs("ya") → "ya"	"ya"	OK	    
+altPairs("y") → "y"	"y"	OK	    
+altPairs("") → ""	""	OK	    
+altPairs("ThisThatTheOther") → "ThThThth"	"ThThThth"	OK
+
+14. stringYak 
+
+Suppose the string "yak" is unlucky. Given a string, return a version where all the "yak" are removed, but the "a" can be any char. The "yak" strings will not overlap. 
+
+stringYak("yakpak") → "pak"
+stringYak("pakyak") → "pak"
+stringYak("yak123ya") → "123ya"
+
+public String stringYak(String str)
+
+  return str.replaceAll("y.k", "");
+
+Expected	Run		
+stringYak("yakpak") → "pak"	"pak"	OK	    
+stringYak("pakyak") → "pak"	"pak"	OK	    
+stringYak("yak123ya") → "123ya"	"123ya"	OK	    
+stringYak("yak") → ""	""	OK	    
+stringYak("yakxxxyak") → "xxx"	"xxx"	OK	    
+stringYak("HiyakHi") → "HiHi"	"HiHi"	OK	    
+stringYak("xxxyakyyyakzzz") → "xxxyyzzz"	"xxxyyzzz"	OK
+
+15. array667 
+
+Given an array of ints, return the number of times that two 6's are next to each other in the array. Also count instances where the second "6" is actually a 7. 
+
+array667({6, 6, 2}) → 1
+array667({6, 6, 2, 6}) → 1
+array667({6, 7, 2, 6}) → 1
+
+public int array667(int[] nums)
+
+  int count = 0;
+  boolean is6 = false;
+  
+  for(int n : nums){
+    if (is6 && (n == 6 || n ==7)) 
+      count++;
+    is6 = (n == 6) ? true : false;
+  }
+  return count;
+
+Expected	Run		
+array667({6, 6, 2}) → 1	1	OK	    
+array667({6, 6, 2, 6}) → 1	1	OK	    
+array667({6, 7, 2, 6}) → 1	1	OK	    
+array667({6, 6, 2, 6, 7}) → 2	2	OK	    
+array667({1, 6, 3}) → 0	0	OK	    
+array667({6, 1}) → 0	0	OK	    
+array667({}) → 0	0	OK	    
+array667({3, 6, 7, 6}) → 1	1	OK	    
+array667({3, 6, 6, 7}) → 2	2	OK	    
+array667({6, 3, 6, 6}) → 1	1	OK	    
+array667({6, 7, 6, 6}) → 2	2	OK	    
+array667({1, 2, 3, 5, 6}) → 0	0	OK	    
+array667({1, 2, 3, 6, 6}) → 1	1	OK
+
+16. noTriples 
+
+Given an array of ints, we'll say that a triple is a value appearing 3 times in a row in the array. Return true if the array does not contain any triples. 
+
+noTriples({1, 1, 2, 2, 1}) → true
+noTriples({1, 1, 2, 2, 2, 1}) → false
+noTriples({1, 1, 1, 2, 2, 2, 1}) → false
+
+public boolean noTriples(int[] nums)
+
+  for(int i = 2; i < nums.length; i++)
+    if (nums[i] == nums[i-1] && nums[i] == nums[i-2])
+      return false;
+  
+  return true;
+
+Expected	Run		
+noTriples({1, 1, 2, 2, 1}) → true	true	OK	    
+noTriples({1, 1, 2, 2, 2, 1}) → false	false	OK	    
+noTriples({1, 1, 1, 2, 2, 2, 1}) → false	false	OK	    
+noTriples({1, 1, 2, 2, 1, 2, 1}) → true	true	OK	    
+noTriples({1, 2, 1}) → true	true	OK	    
+noTriples({1, 1, 1}) → false	false	OK	    
+noTriples({1, 1}) → true	true	OK	    
+noTriples({1}) → true	true	OK	    
+noTriples({}) → true	true	OK
+
+17. has271
+
+Given an array of ints, return true if it contains a 2, 7, 1 pattern -- a value, followed by the value plus 5, followed by the value minus 1. Additionally the 271 counts even if the "1" differs by 2 or less from the correct value. 
+
+has271({1, 2, 7, 1}) → true
+has271({1, 2, 8, 1}) → false
+has271({2, 7, 1}) → true
+
+public boolean has271(int[] nums)
+
+  for(int i = 0; i < nums.length - 2; i++){
+    int plus1 = nums[i] - nums[i+1];
+    int plus2 = nums[i] - nums[i+2];
+    if (plus1 == -5 && plus2 <= 3 && plus2 >= -1)
+      return true;
+  }
+  return false;
+
+Expected	Run		
+has271({1, 2, 7, 1}) → true	true	OK	    
+has271({1, 2, 8, 1}) → false	false	OK	    
+has271({2, 7, 1}) → true	true	OK	    
+has271({3, 8, 2}) → true	true	OK	    
+has271({2, 7, 3}) → true	true	OK	    
+has271({2, 7, 4}) → false	false	OK	    
+has271({2, 7, -1}) → true	true	OK	    
+has271({2, 7, -2}) → false	false	OK	    
+has271({4, 5, 3, 8, 0}) → true	true	OK	    
+has271({2, 7, 5, 10, 4}) → true	true	OK	    
+has271({2, 7, -2, 4, 9, 3}) → true	true	OK	    
+has271({2, 7, 5, 10, 1}) → false	false	OK	    
+has271({2, 7, -2, 4, 10, 2}) → false	false	OK

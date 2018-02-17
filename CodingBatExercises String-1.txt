@@ -1,0 +1,773 @@
+﻿CODING.BAT EXERCISES
+
+Java
+
+String-1
+
+1. helloName
+
+Given a string name, e.g. "Bob", return a greeting of the form "Hello Bob!". 
+
+helloName("Bob") → "Hello Bob!"
+helloName("Alice") → "Hello Alice!"
+helloName("X") → "Hello X!"
+
+public String helloName(String name) 
+
+  return "Hello " + name + "!";
+
+Expected	Run		
+helloName("Bob") → "Hello Bob!"	"Hello Bob!"	OK	    
+helloName("Alice") → "Hello Alice!"	"Hello Alice!"	OK	    
+helloName("X") → "Hello X!"	"Hello X!"	OK	    
+helloName("ho ho ho") → "Hello ho ho ho!"	"Hello ho ho ho!"	OK	    
+helloName("xyz!") → "Hello xyz!!"	"Hello xyz!!"	OK	    
+helloName("Hello") → "Hello Hello!"	"Hello Hello!"	OK	    
+
+2. makeAbba 
+
+Given two strings, a and b, return the result of putting them together in the order abba, e.g. "Hi" and "Bye" returns "HiByeByeHi". 
+
+makeAbba("Hi", "Bye") → "HiByeByeHi"
+makeAbba("Yo", "Alice") → "YoAliceAliceYo"
+makeAbba("What", "Up") → "WhatUpUpWhat"
+
+public String makeAbba(String a, String b)
+
+  return a + b + b + a;
+
+makeAbba("Hi", "Bye") → "HiByeByeHi"	"HiByeByeHi"	OK	    
+makeAbba("Yo", "Alice") → "YoAliceAliceYo"	"YoAliceAliceYo"	OK	    
+makeAbba("What", "Up") → "WhatUpUpWhat"	"WhatUpUpWhat"	OK	
+
+3. makeTags 
+
+The web is built with HTML strings like "<i>Yay</i>" which draws Yay as italic text. In this example, the "i" tag makes <i> and </i> which surround the word "Yay". Given tag and word strings, create the HTML string with tags around the word, e.g. "<i>Yay</i>".
+
+makeTags("i", "Yay") → "<i>Yay</i>"
+makeTags("i", "Hello") → "<i>Hello</i>"
+makeTags("cite", "Yay") → "<cite>Yay</cite>"
+
+public String makeTags(String tag, String word)
+
+  return "<" + tag + ">" + word + "</" + tag + ">";
+
+Expected	Run		
+makeTags("i", "Yay") → "<i>Yay</i>"	"<i>Yay</i>"	OK	    
+makeTags("i", "Hello") → "<i>Hello</i>"	"<i>Hello</i>"	OK	    
+makeTags("cite", "Yay") → "<cite>Yay</cite>"	"<cite>Yay</cite>"	OK	    
+makeTags("i", "i") → "<i>i</i>"	"<i>i</i>"	OK	    
+makeTags("i", "") → "<i></i>"	"<i></i>"	OK	  
+
+4. makeOutWord 
+
+Given an "out" string length 4, such as "<<>>", and a word, return a new string where the word is in the middle of the out string, e.g. "<<word>>". Note: use str.substring(i, j) to extract the String starting at index i and going up to but not including index j. 
+
+makeOutWord("<<>>", "Yay") → "<<Yay>>"
+makeOutWord("<<>>", "WooHoo") → "<<WooHoo>>"
+makeOutWord("[[]]", "word") → "[[word]]"
+
+public String makeOutWord(String out, String word)
+
+  return out.substring(0, out.length()/2) + 
+         word + 
+         out.substring(out.length()/2);
+
+Expected	Run		
+makeOutWord("<<>>", "Yay") → "<<Yay>>"	"<<Yay>>"	OK	    
+makeOutWord("<<>>", "WooHoo") → "<<WooHoo>>"	"<<WooHoo>>"	OK	    
+makeOutWord("[[]]", "word") → "[[word]]"	"[[word]]"	OK	    
+makeOutWord("HHoo", "Hello") → "HHHellooo"	"HHHellooo"	OK	    
+makeOutWord("abyz", "YAY") → "abYAYyz"	"abYAYyz"	OK
+
+5. extraEnd
+
+Given a string, return a new string made of 3 copies of the last 2 chars of the original string. The string length will be at least 2. 
+
+extraEnd("Hello") → "lololo"
+extraEnd("ab") → "ababab"
+extraEnd("Hi") → "HiHiHi"
+
+public String extraEnd(String str)
+
+  String end = str.substring(str.length()-2);
+  return end + end + end;
+
+Expected	Run		
+extraEnd("Hello") → "lololo"	"lololo"	OK	    
+extraEnd("ab") → "ababab"	"ababab"	OK	    
+extraEnd("Hi") → "HiHiHi"	"HiHiHi"	OK	
+
+6. firstTwo 
+
+Given a string, return the string made of its first two chars, so the String "Hello" yields "He". If the string is shorter than length 2, return whatever there is, so "X" yields "X", and the empty string "" yields the empty string "". Note that str.length() returns the length of a string. 
+
+firstTwo("Hello") → "He"
+firstTwo("abcdefg") → "ab"
+firstTwo("ab") → "ab"
+
+public String firstTwo(String str)
+
+  return str.substring(0, Math.min(str.length(), 2));
+
+Expected	Run		
+firstTwo("Hello") → "He"	"He"	OK	    
+firstTwo("abcdefg") → "ab"	"ab"	OK	    
+firstTwo("ab") → "ab"	"ab"	OK	    
+firstTwo("a") → "a"	"a"	OK	    
+firstTwo("") → ""	""	OK	    
+
+7. firstHalf 
+
+Given a string of even length, return the first half. So the string "WooHoo" yields "Woo". 
+
+firstHalf("WooHoo") → "Woo"
+firstHalf("HelloThere") → "Hello"
+firstHalf("abcdef") → "abc"
+
+public String firstHalf(String str) 
+
+  return str.substring(0, str.length()/2);
+
+Expected	Run		
+firstHalf("WooHoo") → "Woo"	"Woo"	OK	    
+firstHalf("HelloThere") → "Hello"	"Hello"	OK	    
+firstHalf("abcdef") → "abc"	"abc"	OK	    
+firstHalf("ab") → "a"	"a"	OK	    
+firstHalf("") → ""	""	OK
+
+8. withoutEnd
+
+Given a string, return a version without the first and last char, so "Hello" yields "ell". The string length will be at least 2. 
+
+withoutEnd("Hello") → "ell"
+withoutEnd("java") → "av"
+withoutEnd("coding") → "odin"
+
+public String withoutEnd(String str)
+
+  return str.substring(1, str.length()-1);
+
+Expected	Run		
+withoutEnd("Hello") → "ell"	"ell"	OK	    
+withoutEnd("java") → "av"	"av"	OK	    
+withoutEnd("coding") → "odin"	"odin"	OK	    
+withoutEnd("code") → "od"	"od"	OK	    
+withoutEnd("ab") → ""	""	OK
+
+9. comboString 
+
+Given 2 strings, a and b, return a string of the form short+long+short, with the shorter string on the outside and the longer string on the inside. The strings will not be the same length, but they may be empty (length 0). 
+
+comboString("Hello", "hi") → "hiHellohi"
+comboString("hi", "Hello") → "hiHellohi"
+comboString("aaa", "b") → "baaab"
+
+public String comboString(String a, String b)
+
+  if (a.length() <= b.length())
+    return a + b + a;
+  else
+    return b + a + b;
+
+Expected	Run		
+comboString("Hello", "hi") → "hiHellohi"	"hiHellohi"	OK	    
+comboString("hi", "Hello") → "hiHellohi"	"hiHellohi"	OK	    
+comboString("aaa", "b") → "baaab"	"baaab"	OK	    
+comboString("b", "aaa") → "baaab"	"baaab"	OK	    
+comboString("aaa", "") → "aaa"	"aaa"	OK
+
+10. nonStart 
+
+Given 2 strings, return their concatenation, except omit the first char of each. The strings will be at least length 1. 
+
+nonStart("Hello", "There") → "ellohere"
+nonStart("java", "code") → "avaode"
+nonStart("shotl", "java") → "hotlava"
+
+  return a.substring(1) + b.substring(1);
+
+Expected	Run		
+nonStart("Hello", "There") → "ellohere"	"ellohere"	OK	    
+nonStart("java", "code") → "avaode"	"avaode"	OK	    
+nonStart("shotl", "java") → "hotlava"	"hotlava"	OK	    
+nonStart("ab", "xy") → "by"	"by"	OK	    
+nonStart("ab", "x") → "b"	"b"	OK	    
+nonStart("x", "ac") → "c"	"c"	OK	    
+nonStart("a", "x") → ""	""	OK	  
+
+11. left2
+
+Given a string, return a "rotated left 2" version where the first 2 chars are moved to the end. The string length will be at least 2. 
+
+left2("Hello") → "lloHe"
+left2("java") → "vaja"
+left2("Hi") → "Hi"
+
+public String left2(String str)
+
+  return str.substring(2) + str.substring(0,2);
+
+Expected	Run		
+left2("Hello") → "lloHe"	"lloHe"	OK	    
+left2("java") → "vaja"	"vaja"	OK	    
+left2("Hi") → "Hi"	"Hi"	OK	    
+left2("code") → "deco"	"deco"	OK	    
+left2("cat") → "tca"	"tca"	OK	    
+left2("12345") → "34512"	"34512"	OK	
+
+12. right2 
+
+Given a string, return a "rotated right 2" version where the last 2 chars are moved to the start. The string length will be at least 2. 
+
+right2("Hello") → "loHel"
+right2("java") → "vaja"
+right2("Hi") → "Hi"
+
+public String right2(String str) 
+
+  return str.substring(str.length()-2) + str.substring(0, str.length()-2);
+
+Expected	Run		
+right2("Hello") → "loHel"	"loHel"	OK	    
+right2("java") → "vaja"	"vaja"	OK	    
+right2("Hi") → "Hi"	"Hi"	OK	    
+right2("code") → "deco"	"deco"	OK	    
+right2("cat") → "atc"	"atc"	OK	    
+
+13. theEnd 
+
+Given a string, return a string length 1 from its front, unless front is false, in which case return a string length 1 from its back. The string will be non-empty. 
+
+theEnd("Hello", true) → "H"
+theEnd("Hello", false) → "o"
+theEnd("oh", true) → "o"
+
+public String theEnd(String str, boolean front) 
+
+  if (front)
+    return str.substring(0,1);
+  else
+    return str.substring(str.length()-1);
+
+Expected	Run		
+theEnd("Hello", true) → "H"	"H"	OK	    
+theEnd("Hello", false) → "o"	"o"	OK	    
+theEnd("oh", true) → "o"	"o"	OK	    
+theEnd("oh", false) → "h"	"h"	OK	    
+theEnd("x", true) → "x"	"x"	OK	    
+theEnd("x", false) → "x"	"x"	OK
+
+14. withouEnd2
+
+Given a string, return a version without both the first and last char of the string. The string may be any length, including 0. 
+
+withouEnd2("Hello") → "ell"
+withouEnd2("abc") → "b"
+withouEnd2("ab") → ""
+
+public String withouEnd2(String str)
+
+  if (str.length() < 3)
+    return "";
+  else
+    return str.substring(1, str.length()-1);
+
+Expected	Run		
+withouEnd2("Hello") → "ell"	"ell"	OK	    
+withouEnd2("abc") → "b"	"b"	OK	    
+withouEnd2("ab") → ""	""	OK	    
+withouEnd2("a") → ""	""	OK	    
+withouEnd2("") → ""	""	OK	
+
+15. middleTwo
+
+Given a string of even length, return a string made of the middle two chars, so the string "string" yields "ri". The string length will be at least 2. 
+
+middleTwo("string") → "ri"
+middleTwo("code") → "od"
+middleTwo("Practice") → "ct"
+
+public String middleTwo(String str) 
+
+  int mid = str.length()/2 - 1;
+  return str.substring(mid, mid+2);
+
+Expected	Run		
+middleTwo("string") → "ri"	"ri"	OK	    
+middleTwo("code") → "od"	"od"	OK	    
+middleTwo("Practice") → "ct"	"ct"	OK	    
+middleTwo("ab") → "ab"	"ab"	OK	    
+
+16. endsLy 
+
+Given a string, return true if it ends in "ly". 
+
+endsLy("oddly") → true
+endsLy("y") → false
+endsLy("oddy") → false
+
+public boolean endsLy(String str)
+
+  return str.length() >= 2 && str.substring(str.length()-2).equals("ly");
+
+Expected	Run		
+endsLy("oddly") → true	true	OK	    
+endsLy("y") → false	false	OK	    
+endsLy("oddy") → false	false	OK	    
+endsLy("oddl") → false	false	OK	    
+endsLy("olydd") → false	false	OK	    
+endsLy("ly") → true	true	OK	    
+endsLy("") → false	false	OK	    
+
+17. nTwice
+
+Given a string and an int n, return a string made of the first and last n chars from the string. The string length will be at least n. 
+
+nTwice("Hello", 2) → "Helo"
+nTwice("Chocolate", 3) → "Choate"
+nTwice("Chocolate", 1) → "Ce"
+
+public String nTwice(String str, int n) 
+
+  return str.substring(0,n) + str.substring(str.length()-n);
+
+Expected	Run		
+nTwice("Hello", 2) → "Helo"	"Helo"	OK	    
+nTwice("Chocolate", 3) → "Choate"	"Choate"	OK	    
+nTwice("Chocolate", 1) → "Ce"	"Ce"	OK	    
+nTwice("Chocolate", 0) → ""	""	OK	    
+nTwice("Code", 4) → "CodeCode"	"CodeCode"	OK	    
+
+18. twoChar 
+
+Given a string and an index, return a string length 2 starting at the given index. If the index is too big or too small to define a string length 2, use the first 2 chars. The string length will be at least 2. 
+
+twoChar("java", 0) → "ja"
+twoChar("java", 2) → "va"
+twoChar("java", 3) → "ja"
+
+public String twoChar(String str, int index)
+
+  if (index < 0 || index > str.length() - 2)
+    return str.substring(0,2);
+  else
+    return str.substring(index, index + 2);
+
+Expected	Run		
+twoChar("java", 0) → "ja"	"ja"	OK	    
+twoChar("java", 2) → "va"	"va"	OK	    
+twoChar("java", 3) → "ja"	"ja"	OK	    
+twoChar("java", 4) → "ja"	"ja"	OK	    
+twoChar("java", -1) → "ja"	"ja"	OK	    
+twoChar("Hello", 0) → "He"	"He"	OK	    
+twoChar("Hello", 1) → "el"	"el"	OK	    
+twoChar("Hello", 99) → "He"	"He"	OK	  
+
+19. middleThree 
+
+Given a string of odd length, return the string length 3 from its middle, so "Candy" yields "and". The string length will be at least 3. 
+
+middleThree("Candy") → "and"
+middleThree("and") → "and"
+middleThree("solving") → "lvi"
+
+public String middleThree(String str)
+
+  int mid = str.length()/2 - 1;
+  return str.substring(mid, mid+3);
+
+Expected	Run		
+middleThree("Candy") → "and"	"and"	OK	    
+middleThree("and") → "and"	"and"	OK	    
+middleThree("solving") → "lvi"	"lvi"	OK	    
+
+20. hasBad 
+
+Given a string, return true if "bad" appears starting at index 0 or 1 in the string, such as with "badxxx" or "xbadxx" but not "xxbadxx". The string may be any length, including 0. Note: use .equals() to compare 2 strings. 
+
+hasBad("badxx") → true
+hasBad("xbadxx") → true
+hasBad("xxbadxx") → false
+
+public boolean hasBad(String str)
+
+  if (str.length() >= 3 && str.substring(0,3).equals("bad"))
+    return true;
+  else if (str.length() >= 4 && str.substring(1,4).equals("bad"))
+    return true;
+  else
+    return false;
+
+Expected	Run		
+hasBad("badxx") → true	true	OK	    
+hasBad("xbadxx") → true	true	OK	    
+hasBad("xxbadxx") → false	false	OK	    
+hasBad("code") → false	false	OK	    
+hasBad("bad") → true	true	OK	    
+hasBad("ba") → false	false	OK	    
+hasBad("xba") → false	false	OK	    
+hasBad("xbad") → true	true	OK	    
+hasBad("") → false	false	OK	   
+
+21. atFirst 
+
+Given a string, return a string length 2 made of its first 2 chars. If the string length is less than 2, use '@' for the missing chars. 
+
+atFirst("hello") → "he"
+atFirst("hi") → "hi"
+atFirst("h") → "h@"
+
+public String atFirst(String str) 
+
+  if (str.length() < 1)
+    return "@@";
+  else if (str.length() == 1)
+    return str.substring(0,1) + "@";
+  else
+    return str.substring(0,2);
+
+Expected	Run		
+atFirst("hello") → "he"	"he"	OK	    
+atFirst("hi") → "hi"	"hi"	OK	    
+atFirst("h") → "h@"	"h@"	OK	    
+atFirst("") → "@@"	"@@"	OK	   
+
+22. lastChars 
+
+Given 2 strings, a and b, return a new string made of the first char of a and the last char of b, so "yo" and "java" yields "ya". If either string is length 0, use '@' for its missing char. 
+
+lastChars("last", "chars") → "ls"
+lastChars("yo", "java") → "ya"
+lastChars("hi", "") → "h@"
+
+public String lastChars(String a, String b)
+
+  String a1 = (a!= null && !a.isEmpty()) ? a.substring(0,1) : "@";
+  String b1 = (b!= null && !b.isEmpty()) ? b.substring(b.length()-1) : "@";
+  return a1 + b1;
+
+Expected	Run		
+lastChars("last", "chars") → "ls"	"ls"	OK	    
+lastChars("yo", "java") → "ya"	"ya"	OK	    
+lastChars("hi", "") → "h@"	"h@"	OK	    
+lastChars("", "hello") → "@o"	"@o"	OK	    
+lastChars("", "") → "@@"	"@@"	OK	   
+lastChars("kitten", "hi") → "ki"	"ki"	OK	    
+lastChars("k", "zip") → "kp"	"kp"	OK	  
+
+23. conCat 
+
+Given two strings, append them together (known as "concatenation") and return the result. However, if the concatenation creates a double-char, then omit one of the chars, so "abc" and "cat" yields "abcat". 
+
+conCat("abc", "cat") → "abcat"
+conCat("dog", "cat") → "dogcat"
+conCat("abc", "") → "abc"
+
+public String conCat(String a, String b) 
+
+  if (a.length() > 0 && b.length() > 0)
+    if (a.substring(a.length()-1).equals(b.substring(0,1)))
+      a = a.substring(0, a.length()-1);
+    
+  return a + b;
+
+Expected	Run		
+conCat("abc", "cat") → "abcat"	"abcat"	OK	    
+conCat("dog", "cat") → "dogcat"	"dogcat"	OK	    
+conCat("abc", "") → "abc"	"abc"	OK	    
+conCat("", "cat") → "cat"	"cat"	OK	    
+conCat("pig", "g") → "pig"	"pig"	OK	    
+
+24. lastTwo 
+
+Given a string of any length, return a new string where the last 2 chars, if present, are swapped, so "coding" yields "codign". 
+
+lastTwo("coding") → "codign"
+lastTwo("cat") → "cta"
+lastTwo("ab") → "ba"
+
+public String lastTwo(String str)
+
+  if (str.length() < 2)
+    return str;
+  else
+    return str.substring(0, str.length()-2) +
+           str.substring(str.length()-1) + 
+           str.substring(str.length()-2, str.length()-1);
+
+Expected	Run		
+lastTwo("coding") → "codign"	"codign"	OK	    
+lastTwo("cat") → "cta"	"cta"	OK	    
+lastTwo("ab") → "ba"	"ba"	OK	    
+lastTwo("a") → "a"	"a"	OK	    
+lastTwo("") → ""	""	OK	  
+
+25. seeColor 
+
+Given a string, if the string begins with "red" or "blue" return that color string, otherwise return the empty string. 
+
+seeColor("redxx") → "red"
+seeColor("xxred") → ""
+seeColor("blueTimes") → "blue"
+
+public String seeColor(String str)
+
+  if (str.length() > 2 && str.substring(0,3).equals("red"))
+    return "red";
+  else if (str.length() > 3 && str.substring(0,4).equals("blue"))
+    return "blue";
+  else
+    return "";
+
+Expected	Run		
+seeColor("redxx") → "red"	"red"	OK	    
+seeColor("xxred") → ""	""	OK	    
+seeColor("blueTimes") → "blue"	"blue"	OK	    
+seeColor("NoColor") → ""	""	OK	    
+seeColor("red") → "red"	"red"	OK	    
+seeColor("re") → ""	""	OK	    
+seeColor("blu") → ""	""	OK	    
+seeColor("blue") → "blue"	"blue"	OK	    
+seeColor("a") → ""	""	OK	    
+seeColor("") → ""	""	OK	    
+
+26. frontAgain 
+
+Given a string, return true if the first 2 chars in the string also appear at the end of the string, such as with "edited". 
+
+frontAgain("edited") → true
+frontAgain("edit") → false
+frontAgain("ed") → true
+
+public boolean frontAgain(String str)
+
+  return str.length() >= 2 && 
+         str.substring(0,2).equals(str.substring(str.length()-2));
+
+Expected	Run		
+frontAgain("edited") → true	true	OK	    
+frontAgain("edit") → false	false	OK	    
+frontAgain("ed") → true	true	OK	    
+frontAgain("jj") → true	true	OK	    
+frontAgain("jjj") → true	true	OK	    
+frontAgain("jjjj") → true	true	OK	    
+frontAgain("jjjk") → false	false	OK	    
+frontAgain("x") → false	false	OK	    
+frontAgain("") → false	false	OK	   
+
+27. minCat 
+
+Given two strings, append them together (known as "concatenation") and return the result. However, if the strings are different lengths, omit chars from the longer string so it is the same length as the shorter string. So "Hello" and "Hi" yield "loHi". The strings may be any length. 
+
+minCat("Hello", "Hi") → "loHi"
+minCat("Hello", "java") → "ellojava"
+minCat("java", "Hello") → "javaello"
+
+public String minCat(String a, String b)
+
+  if (a.length() == b.length())
+    return a + b;
+  else if (a.length() < b.length())
+    return a + b.substring(b.length()-a.length());
+  else
+    return a.substring(a.length()-b.length()) + b;
+
+Expected	Run		
+minCat("Hello", "Hi") → "loHi"	"loHi"	OK	    
+minCat("Hello", "java") → "ellojava"	"ellojava"	OK	    
+minCat("java", "Hello") → "javaello"	"javaello"	OK	    
+minCat("abc", "x") → "cx"	"cx"	OK	    
+minCat("x", "abc") → "xc"	"xc"	OK	    
+minCat("abc", "") → ""	""	OK	    
+
+28. extraFront
+
+Given a string, return a new string made of 3 copies of the first 2 chars of the original string. The string may be any length. If there are fewer than 2 chars, use whatever is there. 
+
+extraFront("Hello") → "HeHeHe"
+extraFront("ab") → "ababab"
+extraFront("H") → "HHH"
+
+public String extraFront(String str) 
+
+  String front = str.substring(0, Math.min(2, str.length()));
+  return front + front + front;
+
+Expected	Run		
+extraFront("Hello") → "HeHeHe"	"HeHeHe"	OK	    
+extraFront("ab") → "ababab"	"ababab"	OK	    
+extraFront("H") → "HHH"	"HHH"	OK	    
+extraFront("") → ""	""	OK	   
+
+29. without2 
+Given a string, if a length 2 substring appears at both its beginning and end, return a string without the substring at the beginning, so "HelloHe" yields "lloHe". The substring may overlap with itself, so "Hi" yields "". Otherwise, return the original string unchanged. 
+
+without2("HelloHe") → "lloHe"
+without2("HelloHi") → "HelloHi"
+without2("Hi") → ""
+
+public String without2(String str)
+
+  if (str.length() > 1 && 
+  str.substring(0,2).equals(str.substring(str.length()-2)))
+    return str.substring(2);
+  else
+    return str;
+
+Expected	Run		
+without2("HelloHe") → "lloHe"	"lloHe"	OK	    
+without2("HelloHi") → "HelloHi"	"HelloHi"	OK	    
+without2("Hi") → ""	""	OK	    
+without2("Chocolate") → "Chocolate"	"Chocolate"	OK	    
+without2("xxx") → "x"	"x"	OK	    
+without2("xx") → ""	""	OK	    
+without2("x") → "x"	"x"	OK	    
+without2("") → ""	""	OK	    
+
+30. deFront 
+
+Given a string, return a version without the first 2 chars. Except keep the first char if it is 'a' and keep the second char if it is 'b'. The string may be any length. Harder than it looks. 
+
+deFront("Hello") → "llo"
+deFront("java") → "va"
+deFront("away") → "aay"
+
+public String deFront(String str) 
+
+  StringBuilder sb = new StringBuilder(str);
+
+  if (str.length() > 1 && str.charAt(1) != 'b')
+    sb.delete(1,2);
+
+  if (str.length() > 0 && str.charAt(0) != 'a')
+    sb.delete(0,1);
+    
+  return sb.toString();
+
+Expected	Run		
+deFront("Hello") → "llo"	"llo"	OK	    
+deFront("java") → "va"	"va"	OK	    
+deFront("away") → "aay"	"aay"	OK	    
+deFront("axy") → "ay"	"ay"	OK	    
+deFront("abc") → "abc"	"abc"	OK	    
+deFront("xby") → "by"	"by"	OK	    
+deFront("ab") → "ab"	"ab"	OK	    
+deFront("ax") → "a"	"a"	OK	    
+deFront("axb") → "ab"	"ab"	OK	    
+deFront("aaa") → "aa"	"aa"	OK	    
+deFront("xbc") → "bc"	"bc"	OK	    
+deFront("bbb") → "bb"	"bb"	OK	    
+deFront("bazz") → "zz"	"zz"	OK	    
+deFront("ba") → ""	""	OK	    
+deFront("abxyz") → "abxyz"	"abxyz"	OK	    
+deFront("hi") → ""	""	OK	    
+deFront("his") → "s"	"s"	OK	    
+deFront("xz") → ""	""	OK	    
+deFront("zzz") → "z"	"z"	OK	    
+
+31. startWord 
+
+Given a string and a second "word" string, we'll say that the word matches the string if it appears at the front of the string, except its first char does not need to match exactly. On a match, return the front of the string, or otherwise return the empty string. So, so with the string "hippo" the word "hi" returns "hi" and "xip" returns "hip". The word will be at least length 1. 
+
+startWord("hippo", "hi") → "hi"
+startWord("hippo", "xip") → "hip"
+startWord("hippo", "i") → "h"
+
+public String startWord(String str, String word) 
+
+  if (word.length() > 0 && str.length() >= word.length())
+    if (str.substring(1,word.length()).equals(word.substring(1)))
+      return str.substring(0,word.length());
+
+  return "";
+
+Expected	Run		
+startWord("hippo", "hi") → "hi"	"hi"	OK	    
+startWord("hippo", "xip") → "hip"	"hip"	OK	    
+startWord("hippo", "i") → "h"	"h"	OK	    
+startWord("hippo", "ix") → ""	""	OK	    
+startWord("h", "ix") → ""	""	OK	    
+startWord("", "i") → ""	""	OK	    
+startWord("hip", "zi") → "hi"	"hi"	OK	    
+startWord("hip", "zip") → "hip"	"hip"	OK	    
+startWord("hip", "zig") → ""	""	OK	    
+startWord("h", "z") → "h"	"h"	OK	    
+startWord("hippo", "xippo") → "hippo"	"hippo"	OK	    
+startWord("hippo", "xyz") → ""	""	OK	    
+startWord("hippo", "hip") → "hip"	"hip"	OK	    
+startWord("kitten", "cit") → "kit"	"kit"	OK	    
+startWord("kit", "cit") → "kit"	"kit"	OK	    
+
+32. withoutX 
+
+Given a string, if the first or last chars are 'x', return the string without those 'x' chars, and otherwise return the string unchanged. 
+
+withoutX("xHix") → "Hi"
+withoutX("xHi") → "Hi"
+withoutX("Hxix") → "Hxi"
+
+public String withoutX(String str)
+
+  if (str.length() < 1)
+    return str;
+    
+  StringBuilder sb = new StringBuilder(str);
+
+  if (str.charAt(str.length()-1)=='x')
+    sb.delete(str.length()-1, str.length());
+
+  if (str.charAt(0)=='x')
+    sb.delete(0, 1);
+    
+  return sb.toString();
+
+Expected	Run		
+withoutX("xHix") → "Hi"	"Hi"	OK	    
+withoutX("xHi") → "Hi"	"Hi"	OK	    
+withoutX("Hxix") → "Hxi"	"Hxi"	OK	    
+withoutX("Hi") → "Hi"	"Hi"	OK	    
+withoutX("xxHi") → "xHi"	"xHi"	OK	    
+withoutX("Hix") → "Hi"	"Hi"	OK	    
+withoutX("xaxbx") → "axb"	"axb"	OK	    
+withoutX("xx") → ""	""	OK	    
+withoutX("x") → ""	""	OK	    
+withoutX("") → ""	""	OK	  
+
+33. withoutX2 
+
+Given a string, if one or both of the first 2 chars is 'x', return the string without those 'x' chars, and otherwise return the string unchanged. This is a little harder than it looks. 
+
+withoutX2("xHi") → "Hi"
+withoutX2("Hxi") → "Hi"
+withoutX2("Hi") → "Hi"
+
+public String withoutX2(String str)
+
+  if (str.length() < 2)
+    return "";
+    
+  StringBuilder sb = new StringBuilder(str);
+
+  if (str.charAt(1)=='x')
+    sb.delete(1,2);
+
+  if (str.charAt(0)=='x')
+    sb.delete(0,1);
+    
+  return sb.toString();
+
+Expected	Run		
+withoutX2("xHi") → "Hi"	"Hi"	OK	    
+withoutX2("Hxi") → "Hi"	"Hi"	OK	    
+withoutX2("Hi") → "Hi"	"Hi"	OK	    
+withoutX2("xxHi") → "Hi"	"Hi"	OK	    
+withoutX2("Hix") → "Hix"	"Hix"	OK	    
+withoutX2("xaxb") → "axb"	"axb"	OK	    
+withoutX2("xx") → ""	""	OK	    
+withoutX2("x") → ""	""	OK	    
+withoutX2("") → ""	""	OK	    
+withoutX2("Hello") → "Hello"	"Hello"	OK	    
+withoutX2("Hexllo") → "Hexllo"	"Hexllo"	OK	    
+withoutX2("xHxllo") → "Hxllo"	"Hxllo"	OK	    
+
